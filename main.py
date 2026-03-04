@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-API_TOKEN = "9f89821d6eac0bba7adb611b00fc164e"
+API_TOKEN = "d417c4819ad4b18a4a2c6bdbd84bb365"
 SECRET_TOKEN = None
 
 @app.route("/", methods=["GET"])
