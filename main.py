@@ -2,6 +2,7 @@ import os
 import time
 import chatwork
 from flask import Flask, request, jsonify
+from modules import math
 app = Flask(__name__)
 API_TOKEN = "d417c4819ad4b18a4a2c6bdbd84bb365"
 SECRET_TOKEN = None
@@ -25,6 +26,9 @@ def webhook():
     #ーーーーーーーーーーーーーーーーーーーーーーーーーーーメインコードーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
     cw = chatwork.setup(room_id, API_TOKEN)
 
+    if body == "/startmath":
+        answer = math.start()
+        cw.messagesend(f"{answer}")
 
     return jsonify({"status": "ok"}), 200
 
