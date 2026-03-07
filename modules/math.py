@@ -6,17 +6,41 @@ import main
 first = random.randint(1,100)
 second = random.randint(1,100)
 
-def start():
+def start(cw):
     calculation = random.choice(["plus","minus","multiplication","division"])
     if calculation == "plus":
+        cw.messagesend(f"{first} + {second} = ?")
         answer = first + second
+        messages = cw.get_new_messages()
+        if messages == answer:
+            cw.messagesend("正解です")
+        else:
+            cw.messagesend("不正解です")
         return answer
     elif calculation == "minus":
+        cw.messagesend(f"{first} - {second} = ?")
         answer = first - second
+        messages = cw.get_new_messages()
+        if messages == answer:
+            cw.messagesend("正解です")
+        else:
+            cw.messagesend("不正解です")
         return answer
     elif calculation == "multiplication":
+        cw.messagesend(f"{first} * {second} = ?")
         answer = first * second
+        messages = cw.get_new_messages()
+        if messages == answer:
+            cw.messagesend("正解です")
+        else:
+            cw.messagesend("不正解です")
         return answer
     elif calculation == "division":
+        cw.messagesend(f"{first} / {second} = ?")
         answer = first / second
+        messages = cw.get_new_messages()
+        if messages == answer:
+            cw.messagesend("正解です")
+        else:
+            cw.messagesend("不正解です")
         return answer

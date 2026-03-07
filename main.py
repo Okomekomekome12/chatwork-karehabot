@@ -27,7 +27,7 @@ def webhook():
     cw = chatwork.setup(room_id, API_TOKEN)
 
     if body == "/startmath":
-        answer = math.start()
+        answer = math.start(cw)
         cw.messagesend(f"{answer}")
 
     return jsonify({"status": "ok"}), 200
