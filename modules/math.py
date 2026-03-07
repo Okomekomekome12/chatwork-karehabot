@@ -14,6 +14,7 @@ def start(cw):
         answer = first + second
         time.sleep(10)
         messages = cw.get_new_messages()
+        print(messages)
         if messages == answer:
             cw.messagesend("正解です")
         else:
@@ -24,6 +25,7 @@ def start(cw):
         answer = first - second
         time.sleep(10)
         messages = cw.get_new_messages()
+        print(messages)
         if messages == answer:
             cw.messagesend("正解です")
         else:
@@ -34,6 +36,7 @@ def start(cw):
         answer = first * second
         time.sleep(15)
         messages = cw.get_new_messages()
+        print(messages)
         if messages == answer:
             cw.messagesend("正解です")
         else:
@@ -44,6 +47,7 @@ def start(cw):
         answer = first / second
         time.sleep(15)
         messages = cw.get_new_messages()
+        print(messages)
         if messages == answer:
             cw.messagesend("正解です")
         else:
