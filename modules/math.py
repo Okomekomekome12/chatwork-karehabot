@@ -13,7 +13,7 @@ def start(cw):
         cw.messagesend(f"{first} + {second} = ? \n10秒以内で答えてください")
         answer = first + second
         time.sleep(10)
-        messages = cw.get_new_messages()
+        messages = cw.get_new_messages()[body]
         print(messages)
         if messages == answer:
             cw.messagesend("正解です")
@@ -24,7 +24,7 @@ def start(cw):
         cw.messagesend(f"{first} - {second} = ?\n10秒以内に答えてください")
         answer = first - second
         time.sleep(10)
-        messages = cw.get_new_messages()
+        messages = cw.get_new_messages()[body]
         print(messages)
         if messages == answer:
             cw.messagesend("正解です")
@@ -35,7 +35,7 @@ def start(cw):
         cw.messagesend(f"{first} * {second} = ?\n15秒以内に答えてください")
         answer = first * second
         time.sleep(15)
-        messages = cw.get_new_messages()
+        messages = cw.get_new_messages()[body]
         print(messages)
         if messages == answer:
             cw.messagesend("正解です")
@@ -46,7 +46,7 @@ def start(cw):
         cw.messagesend(f"{first} / {second} = ?\n15秒以内に答えてください")
         answer = first / second
         time.sleep(15)
-        messages = cw.get_new_messages()
+        messages = cw.get_new_messages()[body]
         print(messages)
         if messages == answer:
             cw.messagesend("正解です")
