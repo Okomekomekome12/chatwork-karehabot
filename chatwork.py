@@ -17,11 +17,11 @@
     get_message_link 最新のメッセージのリンクを取得
     create_task タスクを作成する
     delete_task タスクを削除する
-    webhook_get_message()
-    webhook_get_roomid()
-    webhook_get_account_id()
-    webhook_get_message_id()
-    webhook_verify_signature()
+    webhook_get_message()  webhookからメッセージ本文を取得
+    webhook_get_roomid()　 webhookからルームIDを取得
+    webhook_get_account_id() webhookからアカウントIDを取得
+    webhook_get_message_id() webhookからメッセージIDを取得
+    webhook_verify_signature() webhookの署名を検証
 =============================================
 
 """
