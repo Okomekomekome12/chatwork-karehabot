@@ -48,7 +48,7 @@ def start(cw):
         time.sleep(15)
         messages = cw.get_new_messages()["body"]
         print(messages)
-        if int(messages) == answer:
+        if float(messages) == answer:
             cw.messagesend("正解です")
         else:
             cw.messagesend("不正解です")
