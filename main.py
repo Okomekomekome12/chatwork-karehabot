@@ -14,12 +14,12 @@ def health():
 @app.route("/webhook", methods=["POST"])
 def webhook():
     signature = request.headers.get("X-ChatWorkWebhookSignature")
-    if not chatwork.webhook_verify_signature(request.data, signature, SECRET_TOKEN): # type: ignore
+    if not chatwork.webhook_verify_signature(request.data, signature, SECRET_TOKEN): 
         return "invalid signature", 403
     data = request.json
-    room_id    = chatwork.webhook_get_roomid(data) # type: ignore
+    room_id    = chatwork.webhook_get_roomid(data) 
     body       = chatwork.webhook_get_message(data)
-    account_id = chatwork.webhook_get_account_id(data) # type: ignore
+    account_id = chatwork.webhook_get_account_id(data) 
     message_id = chatwork.webhook_get_message_id(data)
 
 
