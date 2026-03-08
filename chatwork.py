@@ -219,6 +219,8 @@ class setup:
         latest = messages[-1]
         print(f"送信者: {latest['account']['name']}")
         print(f"メッセージ: {latest['body']}")
+        if not messages == True:
+            print("error no messages")
         return latest
     def get_message_link(self):
         url = f"https://api.chatwork.com/v2/rooms/{self.room_id}/messages"
