@@ -15,7 +15,7 @@ def start(cw):
         time.sleep(10)
         messages = cw.get_new_messages()["body"]
         print(messages)
-        if messages == answer:
+        if int(messages) == answer:
             cw.messagesend("正解です")
         else:
             cw.messagesend("不正解です")
@@ -26,29 +26,29 @@ def start(cw):
         time.sleep(10)
         messages = cw.get_new_messages()["body"]
         print(messages)
-        if messages == answer:
+        if int(messages) == answer:
             cw.messagesend("正解です")
         else:
             cw.messagesend("不正解です")
         return answer
     elif calculation == "multiplication":
-        cw.messagesend(f"{first} * {second} = ?\n15秒以内に答えてください")
+        cw.messagesend(f"{first} × {second} = ?\n15秒以内に答えてください")
         answer = first * second
         time.sleep(15)
         messages = cw.get_new_messages()["body"]
         print(messages)
-        if messages == answer:
+        if int(messages) == answer:
             cw.messagesend("正解です")
         else:
             cw.messagesend("不正解です")
         return answer
     elif calculation == "division":
-        cw.messagesend(f"{first} / {second} = ?\n15秒以内に答えてください")
+        cw.messagesend(f"{first} ÷ {second} = ?\n15秒以内に答えてください")
         answer = first / second
         time.sleep(15)
         messages = cw.get_new_messages()["body"]
         print(messages)
-        if messages == answer:
+        if int(messages) == answer:
             cw.messagesend("正解です")
         else:
             cw.messagesend("不正解です")
