@@ -10,8 +10,8 @@ def start(cw):
     plusminussecond = random.randint(1,100)
     kakezanfirst = random.randint(1,50)
     kakezansecond = random.randint(1,50)
-    warizanfirst = random.randint(30,20)
-    warizansecond = random.randint(19,1)
+    warizanfirst = random.randint(20,30)
+    warizansecond = random.randint(1,19)
     calculation = random.choice(["plus","minus","multiplication","division"])
     if calculation == "plus":
         cw.messagesend(f"{plusminusfirst} + {plusminussecond} = ? \n10秒以内で答えてください")
