@@ -8,8 +8,8 @@ import main
 def start(cw):
     plusminusfirst = random.randint(1,100)
     plusminussecond = random.randint(1,100)
-    kakezanfirst = random.randint(1,50)
-    kakezansecond = random.randint(1,50)
+    kakezanfirst = random.randint(1,20)
+    kakezansecond = random.randint(1,20)
     warizanfirst = random.randint(20,30)
     warizansecond = random.randint(1,19)
     calculation = random.choice(["plus","minus","multiplication","division"])
