@@ -31,7 +31,9 @@ def webhook():
         cw.messagesend(f"{answer}")
     elif body == "/help":
         cw.messagesend("[info][title]これはカレハbotのコマンド一覧だよ、よく読め([/title][info]/startmath : 簡単()な計算問題を出してきます、\n15秒待って最後に取得したメッセージが数字ではないとエラーを吐いて止まる親切設計です()[/info][hr][info]/help : ただのヘルプやで[/info][/info]")
-
+    elif body == "/update":
+        cw.messagesend("[info][title]アップデート情報[/title]\
+                       まだアップデートは来ていません[/info]")
     return jsonify({"status": "ok"}), 200
 
 if __name__ == "__main__":
