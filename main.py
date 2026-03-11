@@ -29,10 +29,12 @@ def webhook():
     if body == "/startmath":
         answer = math.start(cw)
         cw.messagesend(f"{answer}")
-    elif body == "/help":
+    elif body == "/助けて":
         cw.messagesend("[info][title]これはカレハbotのコマンド一覧だよ、よく読め([/title]\
-[info]/startmath : 簡単()な計算問題を出してきます、\n15秒待って最後に取得したメッセージが数字ではないとエラーを吐いて止まる親切設計です()[/info][hr]\
-[info]/help : ただのヘルプやで[/info]\
+[info]/startmath : 簡単()な計算問題を出してきます、\n15秒待って最後に取得したメッセージが数字ではないとエラーを吐いて止まる親切設計です()[/info]\
+[hr]\
+[info]/助けて : cwbotとコマンド重なるのでこれ()[/info]\
+[hr]\
 [info]/update : アップデートしたら乗せるお[/info]\
 [/info]")
     elif body == "/update":
