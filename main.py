@@ -40,6 +40,11 @@ def webhook():
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
 まだアップデートは来ていません[/info]")
+    
+
+    
+
+
     return jsonify({"status": "ok"}), 200
 
 if __name__ == "__main__":
