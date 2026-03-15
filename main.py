@@ -22,7 +22,6 @@ def webhook():
     account_id = chatwork.webhook_get_account_id(data) 
     message_id = chatwork.webhook_get_message_id(data)
 
-
     #ーーーーーーーーーーーーーーーーーーーーーーーーーーーメインコードーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
     cw = chatwork.setup(room_id, API_TOKEN)
 
@@ -40,11 +39,10 @@ def webhook():
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
 まだアップデートは来ていません[/info]")
-    
-
-    
-
-
+    elif body == "/add-rammerhead":
+        cw.messagesend("ランマーヘッドをリスト一覧に追加します\nこのメッセージの次に”必ず”リンクを載せてください")
+        body = chatwork.webhook_get_message(data)
+        
     return jsonify({"status": "ok"}), 200
 
 if __name__ == "__main__":
