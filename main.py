@@ -2,11 +2,10 @@ import os
 import time
 import chatwork
 from flask import Flask, request, jsonify
-from modules import math
+from modules import add_url,math
 app = Flask(__name__)
 API_TOKEN = "d417c4819ad4b18a4a2c6bdbd84bb365"
 SECRET_TOKEN = None
-
 @app.route("/", methods=["GET"])
 def health():
     return "OK"
@@ -35,14 +34,20 @@ def webhook():
 [info]/助けて : cwbotとコマンド重なるのでこれ()[/info]\
 [hr]\
 [info]/update : アップデートしたら乗せるお[/info]\
+[info]/add-rammerhead /add-utopia /add-wakame /add-other : ランマーヘッドをリスト一覧に追加します[/info]\
 [/info]")
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
-まだアップデートは来ていません[/info]")
+/add-rammerheadや/add-utopiaなどを実装中、、[/info]")
     elif body == "/add-rammerhead":
         cw.messagesend("ランマーヘッドをリスト一覧に追加します\nこのメッセージの次に”必ず”リンクを載せてください")
         body = chatwork.webhook_get_message(data)
-        
+        add_url.add_rammerhead(body,cw)
+    elif body == "/add-utopia":
+        cw.messagesend("utopiaをリスト一覧に追加します\nこのメッセージの次に”必ず”リンクを載せてください")
+        body = chatwork.webhook_get_message(data)
+        add_url.add_utopia(body,cw)
+    
     return jsonify({"status": "ok"}), 200
 
 if __name__ == "__main__":
