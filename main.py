@@ -47,6 +47,14 @@ def webhook():
         cw.messagesend("utopiaをリスト一覧に追加します\nこのメッセージの次に”必ず”リンクを載せてください")
         body = chatwork.webhook_get_message(data)
         add_url.add_utopia(body,cw)
+    elif body == "/add-wakame":
+        cw.messagesend("wakameをリスト一覧に追加します\nこのメッセージの次に”必ず”リンクを載せてください")
+        body = chatwork.webhook_get_message(data)
+        add_url.add_wakame(body,cw)
+    elif body == "/add-other":
+        cw.messagesend("その他をリスト一覧に追加します\nこのメッセージの次に”必ず”リンクを載せてください")
+        body = chatwork.webhook_get_message(data)
+        add_url.add_other(body,cw)
     
     return jsonify({"status": "ok"}), 200
 
