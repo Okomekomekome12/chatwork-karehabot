@@ -23,11 +23,40 @@ def add_utopia(body, cw):
 
 def add_wakame(body, cw):
     supabase.table("urls").insert({"type": "wakame", "url": body}).execute()
-    cw.messagesend(f"わかめtubeに追加しました: {body}")
+    cw.messagesend(f"Wakameに追加しました: {body}")
 
 def add_other(body, cw):
     supabase.table("urls").insert({"type": "other", "url": body}).execute()
     cw.messagesend(f"その他に追加しました: {body}")
+
+
+def delete_rammerhead(body, cw):
+    result = supabase.table("urls").delete().eq("type", "rammerhead").eq("url", body).execute()
+    if result.data:
+        cw.messagesend(f"Rammerheadから削除しました: {body}")
+    else:
+        cw.messagesend(f"見つかりませんでした: {body}")
+
+def delete_utopia(body, cw):
+    result = supabase.table("urls").delete().eq("type", "utopia").eq("url", body).execute()
+    if result.data:
+        cw.messagesend(f"Utopiaから削除しました: {body}")
+    else:
+        cw.messagesend(f"見つかりませんでした: {body}")
+
+def delete_wakame(body, cw):
+    result = supabase.table("urls").delete().eq("type", "wakame").eq("url", body).execute()
+    if result.data:
+        cw.messagesend(f"Wakameから削除しました: {body}")
+    else:
+        cw.messagesend(f"見つかりませんでした: {body}")
+
+def delete_other(body, cw):
+    result = supabase.table("urls").delete().eq("type", "other").eq("url", body).execute()
+    if result.data:
+        cw.messagesend(f"その他から削除しました: {body}")
+    else:
+        cw.messagesend(f"見つかりませんでした: {body}")
 
 
 def show_list(cw):
