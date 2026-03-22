@@ -8,7 +8,7 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 TYPES = {
     "rammerhead": "Rammerhead",
     "utopia": "Utopia",
-    "wakame": "Wakame",
+    "wakame": "わかめtube",
     "other": "その他"
 }
 
@@ -23,7 +23,7 @@ def add_utopia(body, cw):
 
 def add_wakame(body, cw):
     supabase.table("urls").insert({"type": "wakame", "url": body}).execute()
-    cw.messagesend(f"Wakameに追加しました: {body}")
+    cw.messagesend(f"わかめtubeに追加しました: {body}")
 
 def add_other(body, cw):
     supabase.table("urls").insert({"type": "other", "url": body}).execute()
