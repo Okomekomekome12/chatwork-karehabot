@@ -57,7 +57,7 @@ def webhook():
 [/info]")
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
-/add-rammerheadや/add-utopiaなどを実装中、、[/info]")
+/add-rammerheadや/add-utopiaなどを実装!(試験版)[/info]")
     elif body == "/link-list":
         add_url.show_list(cw)
     elif body == "/add-rammerhead":
