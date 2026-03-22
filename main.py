@@ -59,7 +59,7 @@ def webhook():
 [info]/助けて : cwbotとコマンド重なるのでこれ()[/info]\
 [hr]\
 [info]/update : アップデートしたら乗せるお[/info]\
-[info]/add-rammerhead /add-utopia /add-wakame /add-other : リスト一覧に追加します[/info]\
+[info]/add-rammerhead /add-utopia /add-wakame /add-other : プロキシをリスト一覧に追加します、コマンドを一度送信した後にリンクを載せてください[/info]\
 [hr]\
 [info]/delete-rammerhead /delete-utopia /delete-wakame /delete-other : リスト一覧から削除します[/info]\
 [hr]\
