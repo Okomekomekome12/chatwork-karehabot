@@ -82,12 +82,12 @@ def webhook():
 [hr]\
 [info]/delete-rammerhead /delete-utopia /delete-wakame /delete-other : リスト一覧から削除します[/info]\
 [hr]\
-[info]/link-list : リンク一覧を表示します[/info]\
+[info]/link: リンク一覧を表示します[/info]\
 [/info]")
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
-/add-rammerheadや/add-utopiaなどを実装中、、[/info]")
-    elif body == "/link-list":
+startmath返信対応！[/info]")
+    elif body == "/link":
         add_url.show_list(cw)
     elif body == "/add-rammerhead":
         cw.messagesend("ランマーヘッドをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
