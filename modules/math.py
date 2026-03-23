@@ -57,7 +57,6 @@ def answer(account_id, body, cw):
         user_answer = lines[-1].strip()  # 最後の行
     else:
         user_answer = body.strip()
-    
     try:
         if calculation_type == "division":
             if float(user_answer) == correct_answer:
