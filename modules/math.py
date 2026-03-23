@@ -31,7 +31,7 @@ def start(account_id, cw):
         num1 = random.randint(20, 30)
         num2 = random.randint(1, 19)
         answer = num1 / num2
-        message = f"{num1} ÷ {num2} = ?\n答えを返信してください（小数可）"
+        message = f"{num1} ÷ {num2} = ?\n答えを返信してください（小数おｋ）"
     
     cw.messagesend(message)
     
@@ -60,13 +60,13 @@ def answer(account_id, body, cw):
     try:
         if calculation_type == "division":
             if float(user_answer) == correct_answer:
-                cw.messagesend(f"正解です！答えは {correct_answer} です")
+                cw.messagesend(f"正解！ 答えは {correct_answer} です")
             else:
-                cw.messagesend(f"不正解です。答えは {correct_answer} でした")
+                cw.messagesend(f"不正解答えは {correct_answer} でした")
         else:
             if int(user_answer) == correct_answer:
-                cw.messagesend(f"正解です！答えは {correct_answer} です")
+                cw.messagesend(f"正解！答えは {correct_answer} です")
             else:
-                cw.messagesend(f"不正解です。答えは {correct_answer} でした")
+                cw.messagesend(f"不正解だお 答えは {correct_answer} でした")
     except ValueError:
         cw.messagesend(f"数字を入力してください。正解は {correct_answer} でした")

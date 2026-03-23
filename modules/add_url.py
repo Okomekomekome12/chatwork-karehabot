@@ -23,7 +23,7 @@ def add_utopia(body, cw):
 
 def add_wakame(body, cw):
     supabase.table("urls").insert({"type": "wakame", "url": body}).execute()
-    cw.messagesend(f"Wakameに追加しました: {body}")
+    cw.messagesend(f"わかめtubeに追加しました: {body}")
 
 def add_other(body, cw):
     supabase.table("urls").insert({"type": "other", "url": body}).execute()
@@ -47,7 +47,7 @@ def delete_utopia(body, cw):
 def delete_wakame(body, cw):
     result = supabase.table("urls").delete().eq("type", "wakame").eq("url", body).execute()
     if result.data:
-        cw.messagesend(f"Wakameから削除しました: {body}")
+        cw.messagesend(f"わかめtubeから削除しました: {body}")
     else:
         cw.messagesend(f"見つかりませんでした: {body}")
 
