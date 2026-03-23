@@ -61,11 +61,8 @@ def webhook():
         math.start(account_id, cw)
 
     if account_id in math.current_questions:
-        if account_id == 11156582:
-            pass
-        else:
-            math.answer(account_id, body, cw)
-            return jsonify({"status": "ok"}), 200
+        math.answer(account_id, body, cw)
+        return jsonify({"status": "ok"}), 200
     
 
     elif body == "/助けて":
