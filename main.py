@@ -55,8 +55,10 @@ def webhook():
 
         elif state == "delete-other":
             add_url.delete_other(body, cw)
-            
+
         return jsonify({"status": "ok"}), 200
+    if body == "/startmath":  # ← "/startmath" と完全一致
+        math.start(account_id, cw)
 
     if account_id in math.current_questions:
         math.answer(account_id, body, cw)
