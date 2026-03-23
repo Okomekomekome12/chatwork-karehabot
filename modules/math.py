@@ -14,25 +14,25 @@ def start(account_id, cw):
         num2 = random.randint(1, 100)
         answer = num1 + num2
         message = f"{num1} + {num2} = ?\n答えを返信してください"
-        stoptime = 10
+        
     elif calculation == "minus":
         num1 = random.randint(1, 100)
         num2 = random.randint(1, 100)
         answer = num1 - num2
         message = f"{num1} - {num2} = ?\n答えを返信してください"
-        stoptime = 10
+        
     elif calculation == "multiplication":
         num1 = random.randint(1, 20)
         num2 = random.randint(1, 20)
         answer = num1 * num2
         message = f"{num1} × {num2} = ?\n答えを返信してください"
-        stoptime = 10
+        
     elif calculation == "division":
         num1 = random.randint(20, 30)
         num2 = random.randint(1, 19)
         answer = num1 / num2
         message = f"{num1} ÷ {num2} = ?\n答えを返信してください（小数可）"
-        stoptime = 15
+    
     cw.messagesend(message)
     
     # 問題を保存（account_idをキーに）
