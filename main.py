@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 from modules import add_url, math
 
 app = Flask(__name__)
-API_TOKEN = "d417c4819ad4b18a4a2c6bdbd84bb365"
+API_TOKEN = os.getenv("API_TOKEN")
 SECRET_TOKEN = None
 
 user_state = {}
