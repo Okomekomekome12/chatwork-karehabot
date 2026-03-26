@@ -63,7 +63,7 @@ def show_list(cw):
     result = supabase.table("urls").select("*").execute()
     data = result.data
 
-    message = "[info][title]リンク一覧[/title]"
+    message = "[info][title]リンク一覧、大量に追加してくれた、ただのユーザーに感謝！[/title]"
     for url_type, name in TYPES.items():
         urls = [row["url"] for row in data if row["type"] == url_type] # type: ignore
         url_text = "\n".join(f"・{url}" for url in urls) if urls else "なし"
