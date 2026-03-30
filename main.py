@@ -1,5 +1,6 @@
 import os
 import chatwork
+import time
 from flask import Flask, request, jsonify, render_template
 from modules import add_url, math
 
@@ -9,7 +10,13 @@ SECRET_TOKEN = None
 
 user_state = {}
 BOT_ACCOUNT_ID = 11156582 # ←ここに正しいBotのIDを入れる
-
+def contact_checker():
+    while True:
+        try:
+            chatwork.auto_accept_contacts(API_TOKEN)
+        except Exception as e:
+            print(f"コンタクト承認エラー: {e}")
+        time.sleep(30)  
 @app.route("/", methods=["GET"])
 def health():
     return render_template('index.html')
