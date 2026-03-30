@@ -4,7 +4,7 @@ import chatwork
 from flask import Flask, request, jsonify, render_template
 from modules import add_url,math
 app = Flask(__name__)
-API_TOKEN = "YOUR_API_TOKEN"
+API_TOKEN = os.getenv("API_TOKEN")
 SECRET_TOKEN = None
 @app.route("/", methods=["GET"])
 def health():
