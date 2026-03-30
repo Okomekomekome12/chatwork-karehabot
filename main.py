@@ -1,6 +1,6 @@
 import os
 import chatwork
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from modules import add_url, math
 
 app = Flask(__name__)
@@ -12,7 +12,8 @@ BOT_ACCOUNT_ID = 11156582 # ←ここに正しいBotのIDを入れる
 
 @app.route("/", methods=["GET"])
 def health():
-    return "OK"
+    return render_template('index.html')
+
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
