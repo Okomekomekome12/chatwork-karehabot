@@ -97,7 +97,7 @@ startmath返信対応！[/info]")
         cw.messagesend("utopiaをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "add-utopia"
     elif body == "/add-wakame":
-        cw.messagesend("wakameをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
+        cw.messagesend("わかめtubeをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "add-wakame"
     elif body == "/add-other":
         cw.messagesend("その他をリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
@@ -109,7 +109,7 @@ startmath返信対応！[/info]")
         cw.messagesend("utopiaをリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "delete-utopia"
     elif body == "/delete-wakame":
-        cw.messagesend("wakameをリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
+        cw.messagesend("わかめtubeをリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "delete-wakame"
     elif body == "/delete-other":
         cw.messagesend("その他をリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
