@@ -48,7 +48,7 @@ def webhook():
     if int(account_id) == BOT_ACCOUNT_ID:
         print("→ Bot自身のメッセージなのでスキップ")
         return jsonify({"status": "ok"}), 200
-
+    chatwork.auto_accept_contacts(API_TOKEN)
     # 計算問題の回答チェック
     if account_id in math.current_questions:
         print(f"→ 計算問題の回答チェック実行")

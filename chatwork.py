@@ -35,31 +35,7 @@ import base64
 # ================================================================
 #  Webhook ヘルパー
 # ================================================================
-def auto_accept_contacts(api_token):
-    """コンタクト申請を全て自動承認する"""
-    url = "https://api.chatwork.com/v2/incoming_requests"
-    headers = {"X-ChatWorkToken": api_token}
-    
-    # コンタクト申請一覧を取得
-    response = requests.get(url, headers=headers)
-    
-    if response.status_code != 200:
-        return
-    
-    requests_list = response.json()
-    
-    for req in requests_list:
-        request_id = req["request_id"]
-        name = req["name"]
-        
-        # 承認
-        accept_url = f"https://api.chatwork.com/v2/incoming_requests/{request_id}"
-        result = requests.put(accept_url, headers=headers)
-        
-        if result.status_code == 200:
-            print(f"コンタクト承認: {name}")
-        else:
-            print(f"コンタクト承認失敗: {name}")
+
 def webhook_get_message(data: dict):
     """Webhook ペイロードからメッセージ本文を返す"""
     return data.get("webhook_event", {}).get("body")
@@ -290,3 +266,28 @@ class setup:
         response = requests.put(url, data=payload, headers=headers)
 
         print(response.text)
+def auto_accept_contacts(api_token):
+    """コンタクト申請を全て自動承認する"""
+    url = "https://api.chatwork.com/v2/incoming_requests"
+    headers = {"X-ChatWorkToken": api_token}
+    
+    # コンタクト申請一覧を取得
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code != 200:
+        return
+    
+    requests_list = response.json()
+    
+    for req in requests_list:
+        request_id = req["request_id"]
+        name = req["name"]
+        
+        # 承認
+        accept_url = f"https://api.chatwork.com/v2/incoming_requests/{request_id}"
+        result = requests.put(accept_url, headers=headers)
+        
+        if result.status_code == 200:
+            print(f"コンタクト承認: {name}")
+        else:
+            print(f"コンタクト承認失敗: {name}")
