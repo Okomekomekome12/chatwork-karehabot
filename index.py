@@ -10,13 +10,6 @@ SECRET_TOKEN = None
 
 user_state = {}
 BOT_ACCOUNT_ID = 11156582 # ←ここに正しいBotのIDを入れる
-def contact_checker():
-    while True:
-        try:
-            chatwork.auto_accept_contacts(API_TOKEN)
-        except Exception as e:
-            print(f"コンタクト承認エラー: {e}")
-        time.sleep(30)  
 @app.route("/", methods=["GET"])
 def health():
     return render_template('index.html')
@@ -47,16 +40,20 @@ def webhook():
     if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
         cw.viewer(account_id)
         cw.messagesend("[info][title]荒らし検知[/title]荒らしを検知しました、流します[/info]")
-        for i in range(50):
+        for i in range(70):
             cw.messagesend("a")
             time.sleep(0.7)
         message_link = cw.get_message_link()
-        cw.messagesend("[info][title]荒らし対処完了[/title]メッセージリンクを配布します[/info]")
+        cw.messagesend("[info][title]荒らし対処完了[/title]寝の部屋にメッセージリンクを配布します[/info]")
         cw2.messagesend(f"[info][title]メッセリンク配布[/title]{message_link}[/info]")
     elif body == "/live?":
         cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
-    
+
+    #コンタクト承認
+
+    chatwork.auto_accept_contacts(API_TOKEN)
     # 自分のメッセージは無視
+
     if int(account_id) == BOT_ACCOUNT_ID:
         print("→ Bot自身のメッセージなのでスキップ")
         return jsonify({"status": "ok"}), 200
