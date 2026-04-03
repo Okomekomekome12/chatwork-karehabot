@@ -43,12 +43,25 @@ def webhook():
     print(f"==================\n")
 
     cw = chatwork.setup(room_id, API_TOKEN)
-
+    cw2 = chatwork.setup(420107748,API_TOKEN)
+    if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
+        cw.viewer(account_id)
+        cw.messagesend("[info][title]荒らし検知[/title]荒らしを検知しました、流します[/info]")
+        for i in range(50):
+            cw.messagesend("a")
+            time.sleep(0.7)
+        message_link = cw.get_message_link()
+        cw.messagesend("[info][title]荒らし対処完了[/title]メッセージリンクを配布します[/info]")
+        cw2.messagesend(f"[info][title]メッセリンク配布[/title]{message_link}[/info]")
+    elif body == "/live?":
+        cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
+    
     # 自分のメッセージは無視
     if int(account_id) == BOT_ACCOUNT_ID:
         print("→ Bot自身のメッセージなのでスキップ")
         return jsonify({"status": "ok"}), 200
     chatwork.auto_accept_contacts(API_TOKEN)
+    
     # 計算問題の回答チェック
     if account_id in math.current_questions:
         print(f"→ 計算問題の回答チェック実行")
