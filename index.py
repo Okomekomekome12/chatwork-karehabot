@@ -96,11 +96,13 @@ def webhook():
 [info]/助けて : cwbotとコマンド重なるのでこれ()[/info]\
 [hr]\
 [info]/update : アップデートしたら乗せるお[/info]\
+[hr]\
 [info]/add-rammerhead /add-utopia /add-wakame /add-other : リスト一覧に追加します[/info]\
 [hr]\
 [info]/delete-rammerhead /delete-utopia /delete-wakame /delete-other : リスト一覧から削除します[/info]\
 [hr]\
 [info]/link: リンク一覧を表示します[/info]\
+[hr]\
 [info]/live? : botの生存確認です[/info]\
 [/info]")
     elif body == "/update":
