@@ -3,7 +3,7 @@
                 使い方
             Hello World例
         import chatwork
-        cw = chatwork.setup("ルームid、APIトークン")
+        cw = chatwork.setup("ルームid","APIトークン")
         cw.messagesend("hello world")
 
     機能一覧
