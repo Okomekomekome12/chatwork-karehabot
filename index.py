@@ -86,7 +86,9 @@ def webhook():
         elif state == "delete-other":
             add_url.delete_other(body, cw)
         return jsonify({"status": "ok"}), 200
-
+    if body == "削除":
+        #処理を描く
+        cw.messagesend("未実装だお")
     if body == "/startmath":
         print(f"→ /startmath 実行")
         math.start(account_id, cw)
@@ -97,12 +99,15 @@ def webhook():
 [info]/助けて : cwbotとコマンド重なるのでこれ()[/info]\
 [hr]\
 [info]/update : アップデートしたら乗せるお[/info]\
+[hr]\
 [info]/add-rammerhead /add-utopia /add-wakame /add-other : リスト一覧に追加します[/info]\
 [hr]\
 [info]/delete-rammerhead /delete-utopia /delete-wakame /delete-other : リスト一覧から削除します[/info]\
 [hr]\
 [info]/link: リンク一覧を表示します[/info]\
-[info]/readme : 読　ん　で　ね[/info]\
+[info]/live? : 荒らし対策botの稼働確認です[/info]\
+[hr]\
+[info]/live? : botの生存確認です[/info]\
 [/info]")
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
