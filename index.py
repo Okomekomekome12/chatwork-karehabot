@@ -53,7 +53,8 @@ def webhook():
 
     chatwork.auto_accept_contacts(API_TOKEN)
     # 自分のメッセージは無視
-
+    if body == "/readme":
+        cw.messagesend("このbotを導入したいと思ったことはありますよねぇ！？そうですよねぇ！？（圧）\n")
     if int(account_id) == BOT_ACCOUNT_ID:
         print("→ Bot自身のメッセージなのでスキップ")
         return jsonify({"status": "ok"}), 200
