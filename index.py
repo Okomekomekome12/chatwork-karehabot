@@ -37,7 +37,7 @@ def webhook():
 
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
-    if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
+    if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10 or body.count("[toall]")) >= 1:
         cw.viewer(account_id)
         cw.messagesend("[info][title]荒らし検知[/title]荒らしを検知しました、流します[/info]")
         for i in range(70):
@@ -107,7 +107,7 @@ def webhook():
 [info]/link: リンク一覧を表示します[/info]\
 [info]/live? : 荒らし対策botの稼働確認です[/info]\
 [hr]\
-[info]/live? : botの生存確認です[/info]\
+[info]/readme : 読　ん　で　ね[/info]\
 [/info]")
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
