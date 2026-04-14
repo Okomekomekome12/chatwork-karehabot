@@ -37,7 +37,7 @@ def webhook():
 
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
-    if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
+    if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10 or body.count("[toall]") >= 1 or len(body) >= 1500):
         cw.viewer(account_id)
         cw.messagesend("[info][title]荒らし検知[/title]荒らしを検知しました、流します[/info]")
         for i in range(70):
