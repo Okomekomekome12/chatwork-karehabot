@@ -105,6 +105,7 @@ def webhook():
 [info]/delete-rammerhead /delete-utopia /delete-wakame /delete-other : リスト一覧から削除します[/info]\
 [hr]\
 [info]/link: リンク一覧を表示します[/info]\
+[hr]\
 [info]/live? : 荒らし対策botの稼働確認です[/info]\
 [hr]\
 [info]/readme : 読　ん　で　ね[/info]\
