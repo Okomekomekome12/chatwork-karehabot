@@ -94,21 +94,21 @@ def webhook():
         math.start(account_id, cw)
     elif body == "/助けて":
         cw.messagesend("[info][title]これはカレハbotのコマンド一覧だよ、よく読め([/title]\
-[info]/startmath : 簡単()な計算問題を出してきます[/info]\
+[info][info]/startmath : 簡単()な計算問題を出してきます[/info][/info]\
 [hr]\
-[info]/助けて : cwbotとコマンド重なるのでこれ()[/info]\
+[info][info]/助けて : cwbotとコマンド重なるのでこれ()[/info][/info]\
 [hr]\
-[info]/update : アップデートしたら乗せるお[/info]\
+[info][info]/update : アップデートしたら乗せるお[/info][/info]\
 [hr]\
-[info]/add-rammerhead /add-utopia /add-wakame /add-other : リスト一覧に追加します[/info]\
+[info][info]/add-rammerhead /add-utopia /add-wakame /add-other : リスト一覧に追加します[/info][/info]\
 [hr]\
-[info]/delete-rammerhead /delete-utopia /delete-wakame /delete-other : リスト一覧から削除します[/info]\
+[info][info]/delete-rammerhead /delete-utopia /delete-wakame /delete-other : リスト一覧から削除します[/info][/info]\
 [hr]\
-[info]/link: リンク一覧を表示します[/info]\
+[info][info]/link: リンク一覧を表示します[/info][/info]\
 [hr]\
-[info]/live? : 荒らし対策botの稼働確認です[/info]\
+[info][info]/live? : 荒らし対策botの稼働確認です[/info][/info]\
 [hr]\
-[info]/readme : 読　ん　で　ね[/info]\
+[info]/readme : 読　ん　で　ね[/info][/info]\
 [/info]")
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
