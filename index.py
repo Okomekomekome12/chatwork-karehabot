@@ -108,7 +108,7 @@ def webhook():
 [hr]\
 [info][info]/live? : 荒らし対策botの稼働確認です[/info][/info]\
 [hr]\
-[info]/readme : 読　ん　で　ね[/info][/info]\
+[info][info]/readme : 読　ん　で　ね[/info][/info]\
 [/info]")
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
