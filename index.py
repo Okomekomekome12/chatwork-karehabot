@@ -37,6 +37,10 @@ def webhook():
 
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
+    if int(account_id) == BOT_ACCOUNT_ID:
+        print("→ Bot自身のメッセージなのでスキップ")
+        return jsonify({"status": "ok"}), 200
+    
     if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
         cw.viewer(account_id)
         cw.messagesend("[info][title]荒らし検知[/title]荒らしを検知しました、流します[/info]")
@@ -55,9 +59,7 @@ def webhook():
     # 自分のメッセージは無視
     if body == "/readme":
         cw.messagesend("このbotを導入したいと思ったことはありますよねぇ！？そうですよねぇ！？（圧）\n")
-    if int(account_id) == BOT_ACCOUNT_ID:
-        print("→ Bot自身のメッセージなのでスキップ")
-        return jsonify({"status": "ok"}), 200
+
     chatwork.auto_accept_contacts(API_TOKEN)
     
     # 計算問題の回答チェック
@@ -66,6 +68,8 @@ def webhook():
         math.answer(account_id, body, cw)
         return jsonify({"status": "ok"}), 200
 
+    
+    
     # URL待ち状態の処理
     if account_id in user_state:
         state = user_state.pop(account_id)
