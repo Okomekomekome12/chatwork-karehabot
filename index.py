@@ -34,9 +34,15 @@ def webhook():
     print(f"BOT_ID: {BOT_ACCOUNT_ID}")
     print(f"一致?: {int(account_id) == BOT_ACCOUNT_ID}")
     print(f"==================\n")
-
+    global shutdown
+    shutdown = False
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
+    if body == "/start":
+        cw.messagesend("起動します")
+        shutdown = False
+    if shutdown == True:
+        print("シャットダウン中なのでスキップ")
     if int(account_id) == BOT_ACCOUNT_ID:
         print("→ Bot自身のメッセージなのでスキップ")
         return jsonify({"status": "ok"}), 200
@@ -68,8 +74,11 @@ def webhook():
         math.answer(account_id, body, cw)
         return jsonify({"status": "ok"}), 200
 
-    
-    
+    if body == "/shutdown" and account_id == 10870480:
+        cw.messagesend("シャットダウンします、、、")
+        shutdown = True
+    elif body == "/shutdown":
+        cw.messagesend("この操作は古米しかできないお")
     # URL待ち状態の処理
     if account_id in user_state:
         state = user_state.pop(account_id)
