@@ -40,8 +40,12 @@ def webhook():
     if body == "/start":
         cw.messagesend("起動します")
         shutdown = False
+        return jsonify({"status": "ok"}), 200
+    
     if shutdown == True:
         print("シャットダウン中なのでスキップ")
+        return jsonify({"status": "ok"}), 200
+    
     if int(account_id) == BOT_ACCOUNT_ID:
         print("→ Bot自身のメッセージなのでスキップ")
         return jsonify({"status": "ok"}), 200
@@ -76,6 +80,7 @@ def webhook():
     if body == "/shutdown" and account_id == 10870480:
         cw.messagesend("シャットダウンします、、、")
         shutdown = True
+ 
     elif body == "/shutdown":
         cw.messagesend("この操作は古米しかできないお")
     # URL待ち状態の処理
