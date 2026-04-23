@@ -105,7 +105,7 @@ def webhook():
         print(f"→ /startmath 実行")
         math.start(account_id, cw)
     elif body == "/助けて":
-        cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][piconname:{account_id}]\
+        cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][piconname:{account_id}さん]\
 [info][title]これはカレハbotのコマンド一覧だよ、よく読め([/title]\
 [info][info]/startmath : 簡単()な計算問題を出してきます[/info][/info]\
 [hr]\
