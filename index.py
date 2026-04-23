@@ -105,7 +105,8 @@ def webhook():
         print(f"→ /startmath 実行")
         math.start(account_id, cw)
     elif body == "/助けて":
-        cw.messagesend("[info][title]これはカレハbotのコマンド一覧だよ、よく読め([/title]\
+        cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}\
+[info][title]これはカレハbotのコマンド一覧だよ、よく読め([/title]\
 [info][info]/startmath : 簡単()な計算問題を出してきます[/info][/info]\
 [hr]\
 [info][info]/助けて : cwbotとコマンド重なるのでこれ()[/info][/info]\
@@ -121,7 +122,8 @@ def webhook():
 [info][info]/live? : 荒らし対策botの稼働確認です[/info][/info]\
 [hr]\
 [info][info]/readme : 読　ん　で　ね[/info][/info]\
-[/info]")
+[/info]"
+)
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
 startmath返信対応！[/info]")
