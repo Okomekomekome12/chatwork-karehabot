@@ -7,7 +7,7 @@ from modules import add_url, math
 app = Flask(__name__)
 API_TOKEN = os.getenv("API_TOKEN")
 SECRET_TOKEN = None
-
+shutdown = False
 user_state = {}
 BOT_ACCOUNT_ID = 11156582 # ←ここに正しいBotのIDを入れる
 @app.route("/", methods=["GET"])
@@ -35,7 +35,6 @@ def webhook():
     print(f"一致?: {int(account_id) == BOT_ACCOUNT_ID}")
     print(f"==================\n")
     global shutdown
-    shutdown = False
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
     if body == "/start":
