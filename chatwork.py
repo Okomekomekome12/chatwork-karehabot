@@ -266,6 +266,12 @@ class setup:
         response = requests.put(url, data=payload, headers=headers)
 
         print(response.text)
+    def delete_message(self,room_id,message_id):
+        url = f"https://api.chatwork.com/v2/rooms/{self.room_id}/messages/{message_id}"
+        headers = {"accept": "application/json"}
+        response = requests.delete(url, headers=headers)
+        print(response.text)
+
 def auto_accept_contacts(api_token):
     """コンタクト申請を全て自動承認する"""
     url = "https://api.chatwork.com/v2/incoming_requests"

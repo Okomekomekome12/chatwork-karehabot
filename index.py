@@ -80,9 +80,15 @@ def webhook():
     if body == "/shutdown" and account_id == 10870480:
         cw.messagesend("シャットダウンします、、、")
         shutdown = True
- 
+
     elif body == "/shutdown":
         cw.messagesend("この操作は古米しかできないお")
+    if body and body.count("削除") >= 1:
+        target = body.split("to=")[1].split("]")[0]  
+        delete_room_id , delete_message_id = target.split("-")
+        deleter_room_id = delete_room_id[:4]
+        deleter_message_id = delete_message_id
+        cw.delete_message(deleter_room_id,deleter_message_id)
     # URL待ち状態の処理
     if account_id in user_state:
         state = user_state.pop(account_id)
