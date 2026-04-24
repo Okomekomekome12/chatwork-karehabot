@@ -133,6 +133,8 @@ def webhook():
 [info][info]/live? : 荒らし対策botの稼働確認です[/info][/info]\
 [hr]\
 [info][info]/readme : 読　ん　で　ね[/info][/info]\
+[info][info]botが送信したメッセージに対して削除と返信 : メッセージが消えます[/info][/info]\
+[hr]\
 [/info]"
 )
     elif body == "/update":
