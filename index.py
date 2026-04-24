@@ -87,7 +87,7 @@ def webhook():
     if body and body.count("削除") >= 1:
         target = body.split("to=")[1].split("]")[0]  
         delete_room_id , delete_message_id = target.split("-")
-        deleter_room_id = delete_room_id[:4]
+        deleter_room_id = delete_room_id
         deleter_message_id = delete_message_id
         print(deleter_room_id,deleter_message_id)
         cw.delete_message(deleter_room_id,deleter_message_id)
