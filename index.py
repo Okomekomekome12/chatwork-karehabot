@@ -89,8 +89,9 @@ def webhook():
         delete_room_id , delete_message_id = target.split("-")
         deleter_room_id = delete_room_id[:4]
         deleter_message_id = delete_message_id
+        print(deleter_room_id,deleter_message_id)
         cw.delete_message(deleter_room_id,deleter_message_id)
-        
+
     # URL待ち状態の処理
     if account_id in user_state:
         state = user_state.pop(account_id)
