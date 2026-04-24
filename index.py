@@ -83,12 +83,14 @@ def webhook():
 
     elif body == "/shutdown":
         cw.messagesend("この操作は古米しかできないお")
+
     if body and body.count("削除") >= 1:
         target = body.split("to=")[1].split("]")[0]  
         delete_room_id , delete_message_id = target.split("-")
         deleter_room_id = delete_room_id[:4]
         deleter_message_id = delete_message_id
         cw.delete_message(deleter_room_id,deleter_message_id)
+        
     # URL待ち状態の処理
     if account_id in user_state:
         state = user_state.pop(account_id)
@@ -109,9 +111,6 @@ def webhook():
         elif state == "delete-other":
             add_url.delete_other(body, cw)
         return jsonify({"status": "ok"}), 200
-    if body == "削除":
-        #処理を描く
-        cw.messagesend("未実装だお")
     if body == "/startmath":
         print(f"→ /startmath 実行")
         math.start(account_id, cw)
