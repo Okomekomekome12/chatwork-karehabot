@@ -38,7 +38,10 @@ def webhook():
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
     log_room = chatwork.setup(418992889,API_TOKEN)
-    log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ 部屋→https://www.chatwork.com/#!rid{room_id}[/title][code]{body}[/code][/info]")
+    if int(account_id) == BOT_ACCOUNT_ID:
+        print("→ Bot自身のメッセージなのでスキップ")
+        return jsonify({"status": "ok"}), 200
+    log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ メッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{body}[/code][/info]")
     if body == "/start":
         cw.messagesend("起動します")
         shutdown = False
@@ -48,9 +51,6 @@ def webhook():
         print("シャットダウン中なのでスキップ")
         return jsonify({"status": "ok"}), 200
     
-    if int(account_id) == BOT_ACCOUNT_ID:
-        print("→ Bot自身のメッセージなのでスキップ")
-        return jsonify({"status": "ok"}), 200
     
     if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
         cw.viewer(account_id)
