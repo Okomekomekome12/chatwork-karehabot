@@ -30,7 +30,7 @@ def webhook():
     # デバッグログ
     print(f"\n=== Webhook受信 ===")
     print(f"account_id: {account_id}")
-    print(f"body: {body[:50]}...")  # 最初の50文字
+    print(f"body: {body}")  # 最初の50文字
     print(f"BOT_ID: {BOT_ACCOUNT_ID}")
     print(f"一致?: {int(account_id) == BOT_ACCOUNT_ID}")
     print(f"==================\n")
