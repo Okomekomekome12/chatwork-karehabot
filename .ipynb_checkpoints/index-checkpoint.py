@@ -9,7 +9,7 @@ API_TOKEN = os.getenv("API_TOKEN")
 SECRET_TOKEN = None
 shutdown = False
 user_state = {}
-BOT_ACCOUNT_ID = 11156582
+BOT_ACCOUNT_ID = 11156582 # ←ここに正しいBotのIDを入れる
 @app.route("/", methods=["GET"])
 def health():
     return render_template('index.html')
@@ -30,7 +30,7 @@ def webhook():
     # デバッグログ
     print(f"\n=== Webhook受信 ===")
     print(f"account_id: {account_id}")
-    print(f"body: {body}")
+    print(f"body: {body}")  # 最初の50文字
     print(f"BOT_ID: {BOT_ACCOUNT_ID}")
     print(f"一致?: {int(account_id) == BOT_ACCOUNT_ID}")
     print(f"==================\n")
