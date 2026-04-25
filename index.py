@@ -37,6 +37,9 @@ def webhook():
     global shutdown
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
+    log_room = chatwork.setup(418992889,API_TOKEN)
+    log_room.messagesend(f"[info][title]https://www.chatwork.com/#!rid{room_id}[/title]{body}[/info]")
+
     if body == "/start":
         cw.messagesend("起動します")
         shutdown = False
