@@ -41,7 +41,8 @@ def webhook():
     if int(account_id) == BOT_ACCOUNT_ID:
         print("→ Bot自身のメッセージなのでスキップ")
         return jsonify({"status": "ok"}), 200
-    log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{body}[/code][/info]")
+    logs = body.replace("[/code]","")
+    log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
     if body == "/start":
         cw.messagesend("起動します")
         shutdown = False
@@ -67,6 +68,7 @@ def webhook():
     #コンタクト承認
 
     chatwork.auto_accept_contacts(API_TOKEN)
+
     # 自分のメッセージは無視
     if body == "/readme":
         cw.messagesend("このbotを導入したいと思ったことはありますよねぇ！？そうですよねぇ！？（圧）\n")
