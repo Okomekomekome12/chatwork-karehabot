@@ -141,7 +141,7 @@ def webhook():
 )
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
-startmath返信対応！[/info]")
+shutdownコマンド、toall検知、ログ機能追加！！！！[/info]")
     elif body == "/link":
         add_url.show_list(cw)
     elif body == "/add-rammerhead":
