@@ -62,7 +62,7 @@ def webhook():
         message_link = cw.get_message_link()
         cw.messagesend("[info][title]荒らし対処完了[/title]寝の部屋にメッセージリンクを配布します[/info]")
         cw2.messagesend(f"[info][title]メッセリンク配布[/title]{message_link}[/info]")
-    if body and body.count("toall") >= 1:
+    if body and body.count("[toall]") >= 1:
         cw.viewer(account_id)
         cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
     elif body == "/live?":
