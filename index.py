@@ -64,6 +64,8 @@ def webhook():
         cw2.messagesend(f"[info][title]メッセリンク配布[/title]{message_link}[/info]")
 
         description = log_room.get_description()
+        room_name = log_room.get_room_name()
+        log_room.edit_room_description("[info][title]メッセリンク配布[/title]{message_link}[/info]" + str(description),room_name)
         
     if body and body.count("[toall]") >= 1:
         cw.viewer(account_id)
