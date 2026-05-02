@@ -18,8 +18,6 @@ def help(cw,account_id,room_id,message_id):
     [info][code]/readme : 読　ん　で　ね[/code][/info]\
     [info][code]botが送信したメッセージに対して削除と返信 : メッセージが消えます[/code][/info]\
     [hr]\
-\n\n\
-    [hr]\
 メッセージリンク配布所→https://www.chatwork.com/g/messageLink\
 \
     [/info]"
