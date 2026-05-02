@@ -18,5 +18,9 @@ def help(cw,account_id,room_id,message_id):
     [info][info]/readme : 読　ん　で　ね[/info][/info]\
     [info][info]botが送信したメッセージに対して削除と返信 : メッセージが消えます[/info][/info]\
     [hr]\
+\n\n\
+    [hr]\
+メッセージリンク配布所→\
+\
     [/info]"
     )
