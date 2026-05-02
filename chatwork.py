@@ -273,6 +273,17 @@ class setup:
                     }
         response = requests.delete(url, headers=headers)
         print(response.text)
+    def get_description(self):
+        url = f"https://api.chatwork.com/v2/rooms/{self.room_id}"
+
+        headers = {
+            "accept": "application/json",
+            "x-chatworktoken": self.api_token
+        }
+
+        response = requests.get(url, headers=headers)
+        description = response.json()["description"]
+        return description
 
 def auto_accept_contacts(api_token):
     """コンタクト申請を全て自動承認する"""
