@@ -284,7 +284,17 @@ class setup:
         response = requests.get(url, headers=headers)
         description = response.json()["description"]
         return description
+    def get_room_name(self):
+        url = f"https://api.chatwork.com/v2/rooms/{self.room_id}"
 
+        headers = {
+            "accept": "application/json",
+            "x-chatworktoken": self.api_token
+        }
+
+        response = requests.get(url, headers=headers)
+        name = response.json()["name"]
+        return name
 def auto_accept_contacts(api_token):
     """コンタクト申請を全て自動承認する"""
     url = "https://api.chatwork.com/v2/incoming_requests"
