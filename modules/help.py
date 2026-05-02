@@ -20,7 +20,7 @@ def help(cw,account_id,room_id,message_id):
     [hr]\
 \n\n\
     [hr]\
-メッセージリンク配布所→\
+メッセージリンク配布所→https://www.chatwork.com/g/messageLink\
 \
     [/info]"
     )
