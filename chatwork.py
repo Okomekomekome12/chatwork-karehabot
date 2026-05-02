@@ -310,8 +310,8 @@ class setup:
         }
 
         response = requests.put(url, data=payload, headers=headers)
+        return response.text
 
-        print(response.text)
 def auto_accept_contacts(api_token):
     """コンタクト申請を全て自動承認する"""
     url = "https://api.chatwork.com/v2/incoming_requests"
