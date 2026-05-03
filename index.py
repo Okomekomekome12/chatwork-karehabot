@@ -34,15 +34,19 @@ def webhook():
     print(f"BOT_ID: {BOT_ACCOUNT_ID}")
     print(f"一致?: {int(account_id) == BOT_ACCOUNT_ID}")
     print(f"==================\n")
+
     global shutdown
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
     log_room = chatwork.setup(418992889,API_TOKEN)
+
     if int(account_id) == BOT_ACCOUNT_ID:
         print("→ Bot自身のメッセージなのでスキップ")
         return jsonify({"status": "ok"}), 200
+
     logs = body.replace("[/code]","")
     log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
+
     if body == "/start":
         cw.messagesend("起動します")
         shutdown = False
@@ -56,9 +60,11 @@ def webhook():
     if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
         cw.viewer(account_id)
         cw.messagesend("[info][title]荒らし検知[/title]荒らしを検知しました、流します[/info]")
+
         for i in range(70):
             cw.messagesend("a")
             time.sleep(0.7)
+
         message_link = cw.get_message_link()
         cw.messagesend("[info][title]荒らし対処完了[/title]寝の部屋にメッセージリンクを配布します[/info]")
         cw2.messagesend(f"[info][title]メッセリンク配布[/title]{message_link}[/info]")
@@ -67,22 +73,21 @@ def webhook():
         room_name = log_room.get_room_name()
         log_room.edit_room_description(f"[info][title]メッセリンク配布[/title]{message_link}[/info]" + str(description),room_name)
         
-        
+
     if body and body.count("[toall]") >= 1:
         cw.viewer(account_id)
         cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
+
     elif body == "/live?":
         cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
-    #コンタクト承認
 
-    chatwork.auto_accept_contacts(API_TOKEN)
+    chatwork.auto_accept_contacts(API_TOKEN) # コンタクト承認
 
     # 自分のメッセージは無視
     if body == "/readme":
         cw.messagesend("このbotを導入したいと思ったことはありますよねぇ！？そうですよねぇ！？（圧）\n")
 
-    chatwork.auto_accept_contacts(API_TOKEN)
-    
+
     # 計算問題の回答チェック
     if account_id in math.current_questions:
         print(f"→ 計算問題の回答チェック実行")
@@ -124,9 +129,12 @@ def webhook():
         elif state == "delete-other":
             add_url.delete_other(body, cw)
         return jsonify({"status": "ok"}), 200
+    
+
     if body == "/startmath":
         print(f"→ /startmath 実行")
         math.start(account_id, cw)
+    
     elif body == "/助けて":
         help.help(cw,account_id,room_id,message_id)
 
@@ -143,24 +151,31 @@ ytdlpコマンド追加！仙人さんコード提供ありがとうございま
     elif body == "/add-rammerhead":
         cw.messagesend("ランマーヘッドをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "add-rammerhead"
+    
     elif body == "/add-utopia":
         cw.messagesend("utopiaをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "add-utopia"
+    
     elif body == "/add-wakame":
         cw.messagesend("わかめtubeをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "add-wakame"
+    
     elif body == "/add-other":
         cw.messagesend("その他をリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "add-other"
+    
     elif body == "/delete-rammerhead":
         cw.messagesend("ランマーヘッドをリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "delete-rammerhead"
+    
     elif body == "/delete-utopia":
         cw.messagesend("utopiaをリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "delete-utopia"
+    
     elif body == "/delete-wakame":
         cw.messagesend("わかめtubeをリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "delete-wakame"
+    
     elif body == "/delete-other":
         cw.messagesend("その他をリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "delete-other"
