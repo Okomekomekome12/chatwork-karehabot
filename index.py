@@ -132,7 +132,7 @@ def webhook():
 
     elif body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
-shutdownコマンド、toall検知、メッセージ削除、ログ機能追加！！！！[/info]")
+ytdlpコマンド追加！仙人さんコード提供ありがとうございます！[/info]")
         
     elif body == "/link":
         add_url.show_list(cw)
