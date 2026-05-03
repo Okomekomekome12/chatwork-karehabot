@@ -1,5 +1,5 @@
 import os
-import chatwork
+from chatwork import chatwork
 import time
 from flask import Flask, request, jsonify, render_template
 from modules import add_url, math , help, ytdlp_check
