@@ -16,6 +16,8 @@ def help(cw,account_id,room_id,message_id):
     [info][code]/live? : 荒らし対策botの稼働確認です[/code][/info]\
     [hr]\
     [info][code]/readme : 読　ん　で　ね[/code][/info]\
+    [info][code]/ytdlp : Ytdlpの稼働状況を表示します[/code][/info]\
+    [hr]\
     [info][code]botが送信したメッセージに対して削除と返信 : メッセージが消えます[/code][/info]\
     [hr]\
 メッセージリンク配布所→https://www.chatwork.com/g/messageLink\
