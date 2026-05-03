@@ -67,12 +67,12 @@ def webhook():
         room_name = log_room.get_room_name()
         log_room.edit_room_description(f"[info][title]メッセリンク配布[/title]{message_link}[/info]" + str(description),room_name)
         
+        
     if body and body.count("[toall]") >= 1:
         cw.viewer(account_id)
         cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
     elif body == "/live?":
         cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
-
     #コンタクト承認
 
     chatwork.auto_accept_contacts(API_TOKEN)
