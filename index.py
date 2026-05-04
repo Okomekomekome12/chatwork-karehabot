@@ -156,7 +156,7 @@ ytdlpコマンド追加！仙人さんコード提供ありがとうございま
     if body == "/blacklist":
         blacklist.accont_list(cw)
     
-    if body.find("/delete-blacklist"):
+    #if body.find("/delete-blacklist"):
         account_id = body.split()[1]
         blacklist.delete(cw,account_id)
 
