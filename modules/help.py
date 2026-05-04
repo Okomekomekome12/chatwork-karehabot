@@ -24,7 +24,6 @@ def help(cw,account_id,room_id,message_id):
     [hr]\
     [info][code]botが送信したメッセージに対して削除と返信 : メッセージが消えます[/code][/info]\
     [hr]\
-メッセージリンク配布所→https://www.chatwork.com/g/messageLink\
-\
+    メッセージリンク配布所→https://www.chatwork.com/g/messageLink\
     [/info]"
     )
