@@ -26,6 +26,8 @@ def delete(cw,account_id):
 def accont_list(cw):
     result = supabase.table("accounts").select("*").execute()
     print(result.data)
+    if not result.data:
+        cw.messagesend("誰も居ません")
     for user in result.data:
         cw.messagesend(f"[info][title]ブラックリスト一覧[/title]ユーザ: [piconname:{user["account_id"]}] アカウントID : {user["account_id"]}[/info]") # type: ignore
     return result.data
