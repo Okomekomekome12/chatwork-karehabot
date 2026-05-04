@@ -27,5 +27,5 @@ def accont_list(cw):
     result = supabase.table("accounts").select("*").execute()
     print(result.data)
     for user in result.data:
-        cw.messagesend(f"[info][title]ブラックリスト一覧[/title]ユーザ: [piconname:{user['account_id']}] アカウントID : {user["account_id"]}[/info]") # type: ignore
+        cw.messagesend(f"[info][title]ブラックリスト一覧[/title]ユーザ: [piconname:{user["account_id"]}] アカウントID : {user["account_id"]}[/info]") # type: ignore
     return result.data
