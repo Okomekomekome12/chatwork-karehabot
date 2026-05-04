@@ -57,7 +57,9 @@ def webhook():
         return jsonify({"status": "ok"}), 200
     
     if body.find("[dtext:chatroom_member_is]") == 0:
-        blacklist.check(cw,account_id)
+        target_account_id = body[38:47]
+        print(target_account_id)
+        blacklist.check(cw,target_account_id)
         
 
     if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
