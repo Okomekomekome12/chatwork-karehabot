@@ -20,7 +20,7 @@ def help(cw,account_id,room_id,message_id):
     [hr]\
     [info][code]/blacklist : ブラックリスト一覧を表示します[/code][/info]\
     [hr]\
-    [info][code]/delete-blacklist {account_id}: ブラックリストから削除します\n例: /delete-blacklist 11156582[/code][/info]\
+    [info][code]/delete-blacklist {account_id}: ブラックリストから削除します\n例: /delete-blacklist 1919114514[/code][/info]\
     [hr]\
     [info][code]botが送信したメッセージに対して削除と返信 : メッセージが消えます[/code][/info]\
     [hr]\
