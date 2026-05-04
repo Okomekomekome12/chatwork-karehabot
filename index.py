@@ -58,6 +58,7 @@ def webhook():
         
         if body.find("[dtext:chatroom_member_is]") == 49:
             target_account_id = body[87:95]
+            print("===メンバー参加確認===")
             print(target_account_id)
             blacklist.check(cw,target_account_id)
             
