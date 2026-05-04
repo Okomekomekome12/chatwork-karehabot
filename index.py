@@ -82,9 +82,10 @@ def webhook():
         cw.viewer(account_id)
         cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
 
-    elif body == "/live?":
+    if body == "/live?":
         cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
 
+    
     chatwork.auto_accept_contacts(API_TOKEN) # コンタクト承認
 
     # 自分のメッセージは無視
@@ -139,20 +140,28 @@ def webhook():
         print(f"→ /startmath 実行")
         math.start(account_id, cw)
     
-    elif body == "/助けて":
+    if body == "/助けて":
         help.help(cw,account_id,room_id,message_id)
 
-    elif body == "/update":
+    if body == "/update":
         cw.messagesend("[info][title]アップデート情報[/title]\
 ytdlpコマンド追加！仙人さんコード提供ありがとうございます！[/info]")
         
-    elif body == "/link":
+    if body == "/link":
         add_url.show_list(cw)
     
-    elif body == "/ytdlp":
+    if body == "/ytdlp":
         ytdlp_check.check_status(cw)
 
-    elif body == "/add-rammerhead":
+    if body == "/blacklist":
+        blacklist.accont_list(cw)
+    
+    if body.find("/delete-blacklist"):
+        account_id = body.split()[1]
+        blacklist.delete(cw,account_id)
+
+
+    if body == "/add-rammerhead":
         cw.messagesend("ランマーヘッドをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
         user_state[account_id] = "add-rammerhead"
     
