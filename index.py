@@ -63,7 +63,7 @@ def webhook():
             blacklist.check(cw,target_account_id)
             
 
-        """if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
+        if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
             cw.viewer(account_id)
             cw.messagesend("[info][title]荒らし検知[/title]荒らしを検知しました、流します[/info]")
 
@@ -79,7 +79,7 @@ def webhook():
             room_name = log_room.get_room_name()
             log_room.edit_room_description(f"[info][title]メッセリンク配布[/title]{message_link}[/info]" + str(description),room_name)
             
-            blacklist.add(account_id)"""
+            blacklist.add(account_id)
 
         if body and body.count("[toall]") >= 1:
             cw.viewer(account_id)
