@@ -30,6 +30,8 @@ def accont_list(cw):
         cw.messagesend("誰も居ません")
     txt = "[info][title]ブラックリスト一覧[/title]ユーザ:"
     for user in result.data:
-        txt += f" [piconname:{user['account_id']}] アカウントID : {user['account_id']}[/info]" # type: ignore
+        txt += f" [piconname:{user['account_id']}] アカウントID : {user['account_id']}" # type: ignore
+        
+    txt += "[/info]"
     cw.messagesend(txt)
     return result.data
