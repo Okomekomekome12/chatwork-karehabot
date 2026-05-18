@@ -42,6 +42,9 @@ def webhook():
     print(f"body: {body}")
     print(f"BOT_ID: {BOT_ACCOUNT_ID}")
     print(f"一致?: {int(account_id) == BOT_ACCOUNT_ID}")
+    print(f"AI_flag: {AI_flag}")
+    print(f"AI_room_id: {AI_room_id}")
+    print(f"AI_second_id: {AI_second_id}")
     print(f"==================\n")
 
     global shutdown
