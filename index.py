@@ -36,6 +36,15 @@ def webhook():
     account_id = chatwork.webhook_get_account_id(data)
     message_id = chatwork.webhook_get_message_id(data)
 
+
+
+    global shutdown
+    global AI_flag
+    global AI_room_id
+    global AI_second_id
+    global AI_count
+    global history
+
     # デバッグログ
     print(f"\n=== Webhook受信 ===")
     print(f"account_id: {account_id}")
@@ -46,13 +55,6 @@ def webhook():
     print(f"AI_room_id: {AI_room_id}")
     print(f"AI_second_id: {AI_second_id}")
     print(f"==================\n")
-
-    global shutdown
-    global AI_flag
-    global AI_room_id
-    global AI_second_id
-    global AI_count
-    global history
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
     log_room = chatwork.setup(418992889,API_TOKEN)
