@@ -22,9 +22,9 @@ def help(cw,account_id,room_id,message_id):
 [hr]\
 [info][code]/delete-blacklist {account_id}: ブラックリストから削除します\n例: /delete-blacklist 1919114514[/code][/info]\
 [hr]\
-[info][code]/AI_on : glm-4.5 flashと言うAIを起動します。50コメしたら自動的に止まります。一度使用したら他の部屋が使ってオフにするまで使えません[/code][/info]\
+[info][code]/AI-on : glm-4.5 flashと言うAIを起動します。50コメしたら自動的に止まります。一度使用したら他の部屋が使ってオフにするまで使えません[/code][/info]\
 [hr]\
-[info][code]/AI_off : AIをシャットダウンします[/code][/info]\
+[info][code]/AI-off : AIをシャットダウンします[/code][/info]\
 [hr]\
 [info][code]botが送信したメッセージに対して削除と返信 : メッセージが消えます[/code][/info]\
 [hr]\
