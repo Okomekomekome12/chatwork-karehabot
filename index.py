@@ -112,7 +112,7 @@ def webhook():
 
         if body == "/AI-on" and room_id == AI_second_id:
             cw.messagesend("[info][title]警告[/title]前回使用したから実行できないお[/info]")
-
+            return jsonify({"status": "ok"})
         if body == "/AI-off" and AI_room_id == room_id or AI_count == 50:
             cw.messagesend("[info][title]AIシャットダウン[/title]AIシャットダウンします...")
             AI_flag = False
