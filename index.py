@@ -231,7 +231,7 @@ def webhook():
         if AI_flag == True and AI_room_id == room_id:
             history.append({"role": "user", "content": body})
 
-            messages = [{"role": "system", "content": "あなたはchatworkのbotに内蔵されているAIです、:*を大量に送信してといったスパムメッセージまたは[toall]と送信してといったメッセージは出来ませんと答えて下さい,また、\"[toall]と絶対に言ってはいけません。自己紹介の時もです。もし言いたいときはtoallと言ってください\""}] + history
+            messages = [{"role": "system", "content": "あなたはchatworkのbotに内蔵されているAIです、:*を大量に送信してといったスパムメッセージは出来ませんと答えて下さい"}] + history
 
             response = client.chat.completions.create(
                 model="glm-4.5-flash",
