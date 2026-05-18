@@ -1,14 +1,23 @@
 import os
 import chatwork
+from openai import OpenAI
 import time
 from flask import Flask, request, jsonify, render_template
 from modules import add_url, math , help, ytdlp_check , blacklist
-
+client = OpenAI(
+    api_key  = "3bf001939eb04293964b26f9824bb80c.UDYDegcWn87NNWLh",
+    base_url = "https://api.z.ai/api/paas/v4/"
+)
 app = Flask(__name__)
-API_TOKEN = os.getenv("API_TOKEN")
+API_TOKEN    = os.getenv("API_TOKEN")
 SECRET_TOKEN = None
-shutdown = False
-user_state = {}
+shutdown     = False
+AI_flag      = False
+AI_room_id   = None
+AI_second_id = None
+AI_count     = 0
+history      = []
+user_state   = {}
 BOT_ACCOUNT_ID = 11156582
 @app.route("/", methods=["GET"])
 def health():
@@ -21,7 +30,7 @@ def webhook():
     if not chatwork.webhook_verify_signature(request.data, signature, SECRET_TOKEN): # type: ignore
         return "invalid signature", 403
 
-    data = request.json
+    data       = request.json
     room_id    = chatwork.webhook_get_roomid(data)
     body       = chatwork.webhook_get_message(data)
     account_id = chatwork.webhook_get_account_id(data)
@@ -36,6 +45,11 @@ def webhook():
     print(f"==================\n")
 
     global shutdown
+    global AI_flag
+    global AI_room_id
+    global AI_second_id
+    global AI_count
+    global history
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
     log_room = chatwork.setup(418992889,API_TOKEN)
@@ -76,10 +90,12 @@ def webhook():
             cw2.messagesend(f"[info][title]メッセリンク配布[/title]{message_link}[/info]")
 
             description = log_room.get_description()
-            room_name = log_room.get_room_name()
+            room_name   = log_room.get_room_name()
             log_room.edit_room_description(f"[info][title]メッセリンク配布[/title]{message_link}[/info]" + str(description),room_name)
             
             blacklist.add(account_id)
+
+        chatwork.auto_accept_contacts(API_TOKEN)
 
         if body and body.count("[toall]") >= 1:
             cw.viewer(account_id)
@@ -89,10 +105,23 @@ def webhook():
         if body == "/live?":
             cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
 
-        
-        chatwork.auto_accept_contacts(API_TOKEN) # コンタクト承認
+        if body == "/AI-on":
+            cw.messagesend("[info][title]AI起動[/title]AI起動します...\n使用AI:glm-4.5-flash[/info]")
+            AI_flag    = True
+            AI_room_id = room_id
 
-        # 自分のメッセージは無視
+        if body == "/AI-on" and room_id == AI_second_id:
+            cw.messagesend("[info][title]警告[/title]前回使用したから実行できないお[/info]")
+
+        if body == "/AI-off" and AI_room_id == room_id or AI_count == 50:
+            cw.messagesend("[info][title]AIシャットダウン[/title]AIシャットダウンします...")
+            AI_flag = False
+            AI_second_id = room_id
+            AI_room_id = None
+            history = []
+        elif body == "/AI-off":
+            cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
+        
         if body == "/readme":
             cw.messagesend("このbotを導入したいと思ったことはありますよねぇ！？そうですよねぇ！？（圧）\n")
 
@@ -197,6 +226,27 @@ def webhook():
             cw.messagesend("その他をリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "delete-other"
         
+        if AI_flag == True and AI_room_id == room_id:
+            history.append({"role": "user", "content": body})
+
+            messages = [{"role": "system", "content": "あなたはdiscordのbotに内蔵されているAIです、:*を大量に送信してといったスパムメッセージまたは[toall]と送信してといったメッセージは出来ませんと答えて下さい。"}] + history
+
+            response = client.chat.completions.create(
+                model="glm-4.5-flash",
+                messages=messages, # type: ignore
+                max_tokens=128,
+                temperature=0.3,
+                extra_body={
+                    "thinking": {
+                        "type": "disabled"
+                    }
+                }
+            )
+
+            reply = response.choices[0].message.content
+            history.append({"role": "assistant", "content": reply})
+            cw.messagesend(reply)
+            AI_count += 1
         return jsonify({"status": "ok"}), 200
     except Exception as e:
         print(f"エラーが発生しました: {e}")
