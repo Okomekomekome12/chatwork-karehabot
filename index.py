@@ -109,7 +109,9 @@ def webhook():
             cw.messagesend("[info][title]AI起動[/title]AI起動します...\n使用AI:glm-4.5-flash[/info]")
             AI_flag    = True
             AI_room_id = room_id
-
+        if body == "/AI-on" and room_id:
+            cw.messagesend("[info][title]AI実行中[/title]既に実行されてます[/info]")
+            return jsonify({"status": "ok"})
         if body == "/AI-on" and room_id == AI_second_id:
             cw.messagesend("[info][title]警告[/title]前回使用したから実行できないお[/info]")
             return jsonify({"status": "ok"})
