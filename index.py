@@ -244,9 +244,9 @@ def webhook():
             user_state[account_id] = "delete-other"
         
         if AI_flag == True and AI_room_id == room_id:
-            history.append({"role": "user", "content": body})
+            history.append(f{"role": "user", "content": "account_id : {account_id}\n{body}"})
 
-            messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。タメ口でもいいので人間とだませるしゃべり方で喋ってください"}] + history
+            messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。タメ口でもいいので人間とだませるしゃべり方で喋ってください。AIだと悟らせたらそこでおしまいです。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せます。それで識別して下さい。"}] + history
 
             response = client.chat.completions.create(
                 model="glm-4.5-flash",
