@@ -14,7 +14,8 @@ def check(cw,account_id):
     result = supabase.table("accounts").select("*").eq("account_id", account_id).execute()
     print(result.data)
     if result.data:
-        cw.messagesend("[info][title]圧　倒　的　警　告[/title]このユーザーはブラックリストに登録されているので、閲覧にすることをおすすめします[/info]")
+        cw.messagesend("[info][title]圧　倒　的　警　告[/title]このユーザーはブラックリストに登録されているので、閲覧にします()[/info]")
+        cw.viewer(account_id)
     else:
         pass
 
@@ -28,7 +29,10 @@ def accont_list(cw):
     print(result.data)
     if not result.data:
         cw.messagesend("誰も居ません")
-    txt = "[info][title]ブラックリスト一覧[/title]"
+    txt = "[info][title]ブラックリスト一覧[/title]ユーザ:\n"
     for user in result.data:
-        cw.messagesend(f"ユーザ: [piconname:{user["account_id"]}] アカウントID : {user["account_id"]}[/info]") # type: ignore
+        txt += f" [piconname:{user['account_id']}] アカウントID : {user['account_id']}\n" # type: ignore
+        
+    txt += "[/info]"
+    cw.messagesend(txt)
     return result.data

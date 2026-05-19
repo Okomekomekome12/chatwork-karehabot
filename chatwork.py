@@ -78,7 +78,8 @@ class setup:
         
         response = requests.post(url, data=payload, headers=headers)
         print(response.text)
-
+        if response.status_code != 200:
+            return "error"
     def viewer(self, account_id):
         url = f"https://api.chatwork.com/v2/rooms/{self.room_id}/members"
         headers = {"x-chatworktoken": self.api_token}
@@ -112,6 +113,8 @@ class setup:
 
         response = requests.put(url, data=payload, headers=headers)
         print(response.text)
+        if response.status_code != 200:
+            return "error"
     def admin(self,account_id):
         url = f"https://api.chatwork.com/v2/rooms/{self.room_id}/members"
         headers = {"x-chatworktoken": self.api_token}
@@ -145,6 +148,8 @@ class setup:
 
         response = requests.put(url, data=payload, headers=headers)
         print(response.text)
+        if response.status_code != 200:
+            return "error"
     def member(self,account_id):
         url = f"https://api.chatwork.com/v2/rooms/{self.room_id}/members"
         headers = {"x-chatworktoken": self.api_token}
@@ -178,6 +183,8 @@ class setup:
 
         response = requests.put(url, data=payload, headers=headers)
         print(response.text)
+        if response.status_code != 200:
+            return "error"
     def member_remove(self,account_id):
         url = f"https://api.chatwork.com/v2/rooms/{self.room_id}/members"
         headers = {"x-chatworktoken": self.api_token}
@@ -219,7 +226,7 @@ class setup:
         latest = messages[-1]
         print(f"送信者: {latest['account']['name']}")
         print(f"メッセージ: {latest['body']}")
-        if not messages == True:
+        if not messages:
             print("error no messages")
         return latest
     def get_message_link(self):
@@ -234,7 +241,10 @@ class setup:
         message_id = latest["message_id"]
         link = f"https://www.chatwork.com/#!rid{self.room_id}-{message_id}"
         print(f"最新メッセージリンク: {link}")
-        return link
+        if response.status_code != 200:
+            return "error"
+        else:
+            return link
     def create_task(self, task,account_id):
         url = f"https://api.chatwork.com/v2/rooms/{self.room_id}/tasks"
         payload = {
@@ -266,6 +276,8 @@ class setup:
         response = requests.put(url, data=payload, headers=headers)
 
         print(response.text)
+        if response.status_code != 200:
+            return "error"
     def delete_message(self,message_id):
         url = f"https://api.chatwork.com/v2/rooms/{self.room_id}/messages/{message_id}"
         headers = {"accept": "application/json",
@@ -283,7 +295,10 @@ class setup:
 
         response = requests.get(url, headers=headers)
         description = response.json()["description"]
-        return description
+        if response.status_code != 200:
+            return "error"
+        else:
+            return description
     def get_room_name(self):
         url = f"https://api.chatwork.com/v2/rooms/{self.room_id}"
 
@@ -294,7 +309,10 @@ class setup:
 
         response = requests.get(url, headers=headers)
         name = response.json()["name"]
-        return name
+        if response.status_code != 200:
+            return "error"
+        else:
+            return name
     def edit_room_description(self,description,name):
         url = f"https://api.chatwork.com/v2/rooms/{self.room_id}"
 
@@ -310,7 +328,10 @@ class setup:
         }
 
         response = requests.put(url, data=payload, headers=headers)
-        return response.text
+        if response.status_code != 200:
+            return "error"
+        else:
+            return response.text
 
 def auto_accept_contacts(api_token):
     """コンタクト申請を全て自動承認する"""
