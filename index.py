@@ -9,7 +9,9 @@ client = OpenAI(
     api_key  = "3bf001939eb04293964b26f9824bb80c.UDYDegcWn87NNWLh",
     base_url = "https://api.z.ai/api/paas/v4/"
 )
+
 app = Flask(__name__)
+
 API_TOKEN    = os.getenv("API_TOKEN")
 SECRET_TOKEN = None
 shutdown     = False
@@ -244,7 +246,7 @@ def webhook():
             user_state[account_id] = "delete-other"
         
         if AI_flag == True and AI_room_id == room_id:
-            history.append(f{"role": "user", "content": "account_id : {account_id}\n{body}"})
+            history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
 
             messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。タメ口でもいいので人間とだませるしゃべり方で喋ってください。AIだと悟らせたらそこでおしまいです。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せます。それで識別して下さい。"}] + history
 
