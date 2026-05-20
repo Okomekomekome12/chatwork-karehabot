@@ -81,8 +81,8 @@ def webhook():
             print("シャットダウン中なのでスキップ")
             return jsonify({"status": "ok"}), 200
         
-        if body.find("[dtext:chatroom_added]") == 52:
-            target_account_id = body[43:51]
+        if body.find("[dtext:chatroom_added]") == 95:
+            target_account_id = body[86:93]
             print("===メンバー参加確認===")
             print(target_account_id)
             blacklist.check(cw,target_account_id)
