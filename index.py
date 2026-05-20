@@ -124,20 +124,22 @@ def webhook():
         
         if body == "/AI-on" and AI_flag == True:
             cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
+
         if body == "/AI-on" and room_id == AI_second_id:
             cw.messagesend("[info][title]警告[/title]前回使用したから実行できないお[/info]")
             return jsonify({"status": "ok"}),200
         
         if body == "/AI-off" and AI_room_id == room_id or AI_count == 50:
             cw.messagesend("[info][title]AIシャットダウン[/title]AIシャットダウンします...[/info]")
-            AI_flag = False
+            AI_flag      = False
             AI_second_id = room_id
-            AI_room_id = None
-            AI_count = 0
-            history = []
+            AI_room_id   = None
+            AI_count     = 0
+            history      = []
         elif body == "/AI-off" and AI_room_id == None:
             cw.messagesend("AIは起動してないお")
             return jsonify({"status": "ok"}), 200
+        
         elif body == "/AI-off":
             cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
 
@@ -248,7 +250,7 @@ def webhook():
         if AI_flag == True and AI_room_id == room_id:
             history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
 
-            messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。AIだと人間に必ず悟られないようにしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せます。それで識別して下さい。あ、メッセージの中には入れないでくださいね！もしやりたいなら必ず[pname:12345]みたいな感じで"}] + history
+            messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。AIだと人間に必ず悟られないようにしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せます。それで識別して下さい。あ、本文の中には”必ず”入れないでくださいね！"}] + history
 
             response = client.chat.completions.create(
                 model="glm-4.5-flash",
