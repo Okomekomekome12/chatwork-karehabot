@@ -58,7 +58,7 @@ def webhook():
     print(f"AI_room_id: {AI_room_id}")
     print(f"AI_second_id: {AI_second_id}")
     print(f"AI_count: {AI_count}")
-    print(body[43:51])
+    print(body[86:91])
     print(body.find("[dtext:chatroom_added]"))
     print(f"==================\n")
     cw = chatwork.setup(room_id, API_TOKEN)
@@ -82,7 +82,7 @@ def webhook():
             return jsonify({"status": "ok"}), 200
         
         if body.find("[dtext:chatroom_added]") == 95:
-            target_account_id = body[86:93]
+            target_account_id = body[86:91]
             print("===メンバー参加確認===")
             print(target_account_id)
             blacklist.check(cw,target_account_id)
