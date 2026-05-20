@@ -1,0 +1,5 @@
+body = "[info][dtext:chatroom_member_is][piconname:10914769][dtext:chatroom_added][/info]"
+nubmer = body.find("[dtext:chatroom_added]")
+print(nubmer)
+target_account_id = body[43:51]
+print(target_account_id)
