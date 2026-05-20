@@ -59,6 +59,7 @@ def webhook():
     print(f"AI_second_id: {AI_second_id}")
     print(f"AI_count: {AI_count}")
     print(body[43:51])
+    print(body.find("[dtext:chatroom_added]"))
     print(f"==================\n")
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
