@@ -122,10 +122,8 @@ def webhook():
             AI_room_id = room_id
             return jsonify({"status": "ok"}), 200
         
-        if body == "/AI-on" and AI_room_id == room_id:
-            cw.messagesend("[info][title]AI実行中[/title]既に実行されてます[/info]")
-            return jsonify({"status": "ok"}),200
-        
+        if body == "/AI-on" and AI_flag == True:
+            cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
         if body == "/AI-on" and room_id == AI_second_id:
             cw.messagesend("[info][title]警告[/title]前回使用したから実行できないお[/info]")
             return jsonify({"status": "ok"}),200
@@ -248,32 +246,30 @@ def webhook():
             user_state[account_id] = "delete-other"
         
         if AI_flag == True and AI_room_id == room_id:
-            try:
-                history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
+            history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
 
-                messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。AIだと人間に必ず悟られないようにしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せます。それで識別して下さい。あ、メッセージの中には入れないでくださいね！もしやりたいなら[pname:12345]みたいな感じで"}] + history
+            messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。AIだと人間に必ず悟られないようにしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せます。それで識別して下さい。あ、メッセージの中には入れないでくださいね！もしやりたいなら必ず[pname:12345]みたいな感じで"}] + history
 
-                response = client.chat.completions.create(
-                    model="glm-4.5-flash",
-                    messages=messages, # type: ignore
-                    max_tokens=128,
-                    temperature=0.3,
-                    extra_body={
-                        "thinking": {
-                            "type": "disabled"
-                        }
+            response = client.chat.completions.create(
+                model="glm-4.5-flash",
+                messages=messages, # type: ignore
+                max_tokens=128,
+                temperature=0.3,
+                extra_body={
+                    "thinking": {
+                        "type": "disabled"
                     }
-                )
+                }
+            )
 
-                reply = response.choices[0].message.content
-                history.append({"role": "assistant", "content": reply})
-                cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{reply}")
-                AI_count += 1
-                return jsonify({"status": "ok"}), 200
-            except Exception as e:
-                cw.messagesend(f"エラーが発生しました: {e}")
+            reply = response.choices[0].message.content
+            history.append({"role": "assistant", "content": reply})
+            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{reply}")
+            AI_count += 1
+        return jsonify({"status": "ok"}), 200
     except Exception as e:
         print(f"エラーが発生しました: {e}")
+        cw.messagesend(f"エラーが発生しました: {e}")
         return jsonify({"status": "ok"}), 200
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
