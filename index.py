@@ -4,11 +4,14 @@ from openai import OpenAI
 import time
 from flask import Flask, request, jsonify, render_template
 from modules import add_url, math , help, ytdlp_check , blacklist
+
 client = OpenAI(
     api_key  = "3bf001939eb04293964b26f9824bb80c.UDYDegcWn87NNWLh",
     base_url = "https://api.z.ai/api/paas/v4/"
 )
+
 app = Flask(__name__)
+
 API_TOKEN    = os.getenv("API_TOKEN")
 SECRET_TOKEN = None
 shutdown     = False
@@ -54,6 +57,9 @@ def webhook():
     print(f"AI_flag: {AI_flag}")
     print(f"AI_room_id: {AI_room_id}")
     print(f"AI_second_id: {AI_second_id}")
+    print(f"AI_count: {AI_count}")
+    print(body[86:94])
+    print(body.find("[dtext:chatroom_added]"))
     print(f"==================\n")
     cw = chatwork.setup(room_id, API_TOKEN)
     cw2 = chatwork.setup(420107748,API_TOKEN)
@@ -114,23 +120,29 @@ def webhook():
             cw.messagesend("[info][title]AI起動[/title]AI起動します...\n使用AI:glm-4.5-flash[/info]")
             AI_flag    = True
             AI_room_id = room_id
-            
+            return jsonify({"status": "ok"}), 200
+        
         if body == "/AI-on" and AI_room_id == room_id:
             cw.messagesend("[info][title]AI実行中[/title]既に実行されてます[/info]")
-            return jsonify({"status": "ok"})
-
+            return jsonify({"status": "ok"}),200
+        
         if body == "/AI-on" and room_id == AI_second_id:
             cw.messagesend("[info][title]警告[/title]前回使用したから実行できないお[/info]")
-            return jsonify({"status": "ok"})
+            return jsonify({"status": "ok"}),200
+        
         if body == "/AI-off" and AI_room_id == room_id or AI_count == 50:
             cw.messagesend("[info][title]AIシャットダウン[/title]AIシャットダウンします...[/info]")
             AI_flag = False
             AI_second_id = room_id
             AI_room_id = None
+            AI_count = 0
             history = []
+        elif body == "/AI-off" and AI_room_id == None:
+            cw.messagesend("AIは起動してないお")
+            return jsonify({"status": "ok"}), 200
         elif body == "/AI-off":
             cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
-        
+
         if body == "/readme":
             cw.messagesend("このbotを導入したいと思ったことはありますよねぇ！？そうですよねぇ！？（圧）\n")
 
@@ -236,9 +248,9 @@ def webhook():
             user_state[account_id] = "delete-other"
         
         if AI_flag == True and AI_room_id == room_id:
-            history.append({"role": "user", "content": body})
+            history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
 
-            messages = [{"role": "system", "content": "あなたはchatworkのbotに内蔵されているAIです、:*を大量に送信してといったスパムメッセージは出来ませんと答えて下さい"}] + history
+            messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。AIだと人間に必ず悟られないようにしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せます。それで識別して下さい。"}] + history
 
             response = client.chat.completions.create(
                 model="glm-4.5-flash",
@@ -254,7 +266,7 @@ def webhook():
 
             reply = response.choices[0].message.content
             history.append({"role": "assistant", "content": reply})
-            cw.messagesend(reply)
+            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{reply}")
             AI_count += 1
         return jsonify({"status": "ok"}), 200
     except Exception as e:
