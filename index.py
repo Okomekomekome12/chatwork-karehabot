@@ -250,7 +250,7 @@ def webhook():
         if AI_flag == True and AI_room_id == room_id:
             history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
 
-            messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。AIだと人間に必ず悟られないようにしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せますが、本文の中にaccount_id : 1234などと入れないでください。返信するときにAIとバレます"}] + history
+            messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。AIだと人間に必ず悟られないようにしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せますが、本文の中に”必ず”account_id : 1234などと入れないでください。返信するときにAIとバレます"}] + history
 
             response = client.chat.completions.create(
                 model="glm-4.5-flash",
