@@ -112,7 +112,7 @@ def webhook():
             cw.viewer(account_id)
             cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
             blacklist.add(account_id)
-            
+        elif 
         if body == "/live?":
             cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
 

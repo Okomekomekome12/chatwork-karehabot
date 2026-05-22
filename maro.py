@@ -20,7 +20,16 @@ def webhook():
     body       = chatwork.webhook_get_message(data)
     account_id = chatwork.webhook_get_account_id(data)
     message_id = chatwork.webhook_get_message_id(data)
-
+    global AI_flag
+    global AI_room_id
+    global AI_second_id
+    global AI_count
+    global history
+    cw = chatwork.setup(room_id, API_TOKEN)
+    if body == "/AI-on":
+        AI_flag    = True
+        AI_room_id = room_id
+        
     return jsonify({"status": "ok"}), 200
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))

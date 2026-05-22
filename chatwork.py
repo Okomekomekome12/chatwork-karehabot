@@ -332,6 +332,20 @@ class setup:
             return "error"
         else:
             return response.text
+    def is_admin(self, account_id) -> bool:
+        """指定した account_id が管理者かどうかを返す"""
+        url = f"https://api.chatwork.com/v2/rooms/{self.room_id}/members"
+        headers = {"x-chatworktoken": self.api_token}
+
+        response = requests.get(url, headers=headers)
+        if response.status_code != 200:
+            return False
+
+        for member in response.json():
+            if str(member["account_id"]) == str(account_id):
+                return member["role"] == "admin"
+
+        return False 
 
 def auto_accept_contacts(api_token):
     """コンタクト申請を全て自動承認する"""
