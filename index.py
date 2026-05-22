@@ -40,7 +40,6 @@ def webhook():
     message_id = chatwork.webhook_get_message_id(data)
 
 
-
     global shutdown
     global AI_flag
     global AI_room_id
@@ -61,9 +60,11 @@ def webhook():
     print(body[86:94])
     print(body.find("[dtext:chatroom_added]"))
     print(f"==================\n")
-    cw = chatwork.setup(room_id, API_TOKEN)
-    cw2 = chatwork.setup(420107748,API_TOKEN)
+
+    cw       = chatwork.setup(room_id, API_TOKEN)
+    cw2      = chatwork.setup(420107748,API_TOKEN)
     log_room = chatwork.setup(418992889,API_TOKEN)
+    role     = cw.is_admin(account_id)
     try:
         if int(account_id) == BOT_ACCOUNT_ID:
             print("→ Bot自身のメッセージなのでスキップ")
@@ -112,7 +113,10 @@ def webhook():
             cw.viewer(account_id)
             cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
             blacklist.add(account_id)
-        elif 
+            
+        elif body.count("[toall]") >= 1 and role == True:
+            pass
+
         if body == "/live?":
             cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
 
