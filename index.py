@@ -69,10 +69,11 @@ def webhook():
         if int(account_id) == BOT_ACCOUNT_ID:
             print("→ Bot自身のメッセージなのでスキップ")
             return jsonify({"status": "ok"}), 200
-
-        logs = body.replace("[/code]","")
-        log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
-
+        if not room_id == 437219859:
+            logs = body.replace("[/code]","")
+            log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
+        else:
+            pass
         if body == "/start":
             cw.messagesend("起動します")
             shutdown = False
