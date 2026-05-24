@@ -46,7 +46,6 @@ def webhook():
     global AI_second_id
     global AI_count
     global history
-
     # デバッグログ
     print(f"\n=== Webhook受信 ===")
     print(f"account_id: {account_id}")
@@ -65,6 +64,7 @@ def webhook():
     cw2      = chatwork.setup(420107748,API_TOKEN)
     log_room = chatwork.setup(418992889,API_TOKEN)
     role     = cw.is_admin(account_id)
+    print(role)
     try:
         if int(account_id) == BOT_ACCOUNT_ID:
             print("→ Bot自身のメッセージなのでスキップ")
