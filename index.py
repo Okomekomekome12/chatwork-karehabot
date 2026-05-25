@@ -269,9 +269,10 @@ def webhook():
                 }
             )
 
-            reply = response.choices[0].message.content
-            history.append({"role": "assistant", "content": reply})
-            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{reply}")
+            reply = response.choices[0].message.content or ""
+            answer = reply.replace("[toall]", "")
+            history.append({"role": "assistant", "content": answer})
+            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{answer}")
             AI_count += 1
         return jsonify({"status": "ok"}), 200
     except Exception as e:
