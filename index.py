@@ -90,7 +90,7 @@ def webhook():
             blacklist.check(cw,target_account_id)
             
 
-        if body and (body.count("(quick)") >= 10 or body.count(":*") >= 10):
+        if body and (body.count("(quick)") >= 100 or body.count(":*") >= 100):
             cw.viewer(account_id)
             cw.messagesend("[info][title]荒らし検知[/title]荒らしを検知しました、流します[/info]")
 
@@ -109,6 +109,7 @@ def webhook():
             blacklist.add(account_id)
 
         chatwork.auto_accept_contacts(API_TOKEN)
+
         if body.count("[toall]") >= 1 and role == True:
             pass
             return jsonify({"status": "ok"}), 200
@@ -118,8 +119,6 @@ def webhook():
             cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
             blacklist.add(account_id)
             
-        if body.count("[toall]") >= 1 and role == True:
-            pass
 
         if body == "/live?":
             cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
