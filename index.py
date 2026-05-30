@@ -123,20 +123,20 @@ def webhook():
         if body == "/live?":
             cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
 
-        if body == "/AI-on":
+        elif body == "/AI-on":
             cw.messagesend("[info][title]AI起動[/title]AI起動します...\n使用AI:glm-4.5-flash[/info]")
             AI_flag    = True
             AI_room_id = room_id
             return jsonify({"status": "ok"}), 200
         
-        if body == "/AI-on" and AI_flag == True:
+        elif body == "/AI-on" and AI_flag == True:
             cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
 
-        if body == "/AI-on" and room_id == AI_second_id:
+        elif body == "/AI-on" and room_id == AI_second_id:
             cw.messagesend("[info][title]警告[/title]前回使用したから実行できないお[/info]")
             return jsonify({"status": "ok"}),200
         
-        if body == "/AI-off" and AI_room_id == room_id or AI_count == 50:
+        elif body == "/AI-off" and AI_room_id == room_id or AI_count == 50:
             cw.messagesend("[info][title]AIシャットダウン[/title]AIシャットダウンします...[/info]")
             AI_flag      = False
             AI_second_id = room_id
@@ -150,24 +150,24 @@ def webhook():
         elif body == "/AI-off":
             cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
 
-        if body == "/readme":
+        elif body == "/readme":
             cw.messagesend("このbotを導入したいと思ったことはありますよねぇ！？そうですよねぇ！？（圧）\n")
 
 
         # 計算問題の回答チェック
-        if account_id in math.current_questions:
+        elif account_id in math.current_questions:
             print(f"→ 計算問題の回答チェック実行")
             math.answer(account_id, body, cw)
             return jsonify({"status": "ok"}), 200
 
-        if body == "/shutdown" and account_id == 10870480:
+        elif body == "/shutdown" and account_id == 10870480:
             cw.messagesend("シャットダウンします、、、")
             shutdown = True
 
         elif body == "/shutdown":
             cw.messagesend("この操作は古米しかできないお")
 
-        if body and body.count("削除") >= 1:
+        elif body and body.count("削除") >= 1:
             target = body.split("to=")[1].split("]")[0]  
             delete_room_id , delete_message_id = target.split("-")
             deleter_room_id = delete_room_id
@@ -197,32 +197,32 @@ def webhook():
             return jsonify({"status": "ok"}), 200
         
 
-        if body == "/startmath":
+        elif body == "/startmath":
             print(f"→ /startmath 実行")
             math.start(account_id, cw)
         
-        if body == "/助けて":
+        elif body == "/助けて":
             help.help(cw,account_id,room_id,message_id)
 
-        if body == "/update":
+        elif body == "/update":
             cw.messagesend("[info][title]アップデート情報[/title]\
     ytdlpコマンド追加！仙人さんコード提供ありがとうございます！[/info]")
             
-        if body == "/link":
+        elif body == "/link":
             add_url.show_list(cw)
         
-        if body == "/ytdlp":
+        elif body == "/ytdlp":
             ytdlp_check.check_status(cw)
 
-        if body == "/blacklist":
+        elif body == "/blacklist":
             blacklist.accont_list(cw)
         
-        if body.find("/delete-blacklist") == 0:
+        elif body.find("/delete-blacklist") == 0:
             account_id = body.split()[1]
             blacklist.delete(cw,account_id)
 
 
-        if body == "/add-rammerhead":
+        elif body == "/add-rammerhead":
             cw.messagesend("ランマーヘッドをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "add-rammerhead"
         
@@ -254,7 +254,7 @@ def webhook():
             cw.messagesend("その他をリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "delete-other"
         
-        if AI_flag == True and AI_room_id == room_id:
+        elif AI_flag == True and AI_room_id == room_id:
             history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
 
             messages = [{"role": "system", "content": "あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。AIだと人間に必ず悟られないようにしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せますが、本文の中に”必ず”account_id : 1234などと入れないでください。返信するときにAIとバレます"}] + history
