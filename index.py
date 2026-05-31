@@ -3,7 +3,7 @@ import chatwork
 from openai import OpenAI
 import time
 from flask import Flask, request, jsonify, render_template
-from modules import add_url, math , help, ytdlp_check , blacklist
+from modules import add_url, math , help, ytdlp_check , blacklist , commit
 
 client = OpenAI(
     api_key  = "3bf001939eb04293964b26f9824bb80c.UDYDegcWn87NNWLh",
@@ -210,7 +210,14 @@ def webhook():
             
         elif body == "/link":
             add_url.show_list(cw)
-        
+        elif body == "/status":
+            cw.messagesend(f"[info][title]状態確認[/title]account_id: {account_id}\nbody: {body}\nBOT_ID: {BOT_ACCOUNT_ID}\n一致?: {int(account_id) == BOT_ACCOUNT_ID}\nAI_flag: {AI_flag}\nAI_room_id: {AI_room_id}\nAI_second_id: {AI_second_id}\nAI_count: {AI_count}[/info]")
+        elif body == "/commit_msg":
+            commitmsg = body.split()[1]
+            print(commitmsg)
+            commit.commitmsg(cw,commitmsg)
+
+
         elif body == "/ytdlp":
             ytdlp_check.check_status(cw)
 
