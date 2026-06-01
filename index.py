@@ -212,7 +212,7 @@ def webhook():
             add_url.show_list(cw)
         elif body == "/status":
             cw.messagesend(f"[info][title]状態確認[/title]account_id: {account_id}\nbody: {body}\nBOT_ID: {BOT_ACCOUNT_ID}\n一致?: {int(account_id) == BOT_ACCOUNT_ID}\nAI_flag: {AI_flag}\nAI_room_id: {AI_room_id}\nAI_second_id: {AI_second_id}\nAI_count: {AI_count}[/info]")
-        elif body == "/commit_msg":
+        elif body.find("/commit_msg") >= 1:
             commitmsg = body.split()[1]
             print(commitmsg)
             commit.commitmsg(cw,commitmsg)
