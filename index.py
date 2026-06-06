@@ -114,7 +114,7 @@ def webhook():
             pass
             return jsonify({"status": "ok"}), 200
 
-        if body and body.count("[toall]") >= 1:
+        elif body and body.count("[toall]") >= 1:
             cw.viewer(account_id)
             cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
             blacklist.add(account_id)
@@ -211,7 +211,7 @@ def webhook():
         elif body == "/link":
             add_url.show_list(cw)
         elif body == "/status":
-            cw.messagesend(f"[info][title]状態確認[/title][code]account_id: {account_id}\nbody: {body}\nBOT_ID: {BOT_ACCOUNT_ID}\n一致?: {int(account_id) == BOT_ACCOUNT_ID}\nAI_flag: {AI_flag}\nAI_room_id: {AI_room_id}\nAI_second_id: {AI_second_id}\nAI_count: {AI_count}[/code][/info]")
+            cw.messagesend(f"[info][title]状態確認[/title][code]account_id: {account_id}\nbody: {body}\nBOT_ID: {BOT_ACCOUNT_ID}\n一致?: {int(account_id) == BOT_ACCOUNT_ID}\nAI_flag: {AI_flag}\nAI_room_id: {AI_room_id}\nAI_second_id: {AI_second_id}\nAI_count: {AI_count}\nrole : {role}[/code][/info]")
         elif body and body.find("/commit_msg") >= 1:
             commitmsg = body.split()[1]
             print(commitmsg)
