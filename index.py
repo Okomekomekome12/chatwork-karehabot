@@ -148,7 +148,11 @@ def webhook():
         elif body == "/AI-on" and room_id == AI_second_id:
             cw.messagesend("[info][title]警告[/title]前回使用したから実行できないお[/info]")
             return jsonify({"status": "ok"}),200
-        
+        elif body == "/gemini-off" and gemini_flag == True:
+            cw.messagesend("[info][title]Geminiシャットダウン[/title]Geminiシャットダウンします...[/info]")
+            gemini_flag    = False
+            gemini_room_id = None
+            return jsonify({"status": "ok"}), 200
         elif body == "/AI-off" and AI_room_id == room_id or AI_count == 50:
             cw.messagesend("[info][title]AIシャットダウン[/title]AIシャットダウンします...[/info]")
             AI_flag      = False
