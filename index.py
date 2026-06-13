@@ -294,8 +294,9 @@ def webhook():
             reply = response.text or ""
             history.append(types.Content(role="model", parts=[types.Part(text=reply)]))
             answer = reply.replace("[toall]", "うおw")
-            history.append({"role": "assistant", "content": answer})
-            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{answer}")
+            message = answer.replace("account_id : 1234","")
+            history.append({"role": "assistant", "content": message})
+            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{message}")
             AI_count += 1
 
 
