@@ -1,6 +1,6 @@
 def help(cw,account_id,room_id,message_id):
     cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\
-[info][title]これはカレハbotのコマンド一覧だよ、よく読め([/title]\
+[info][title]これはカレハbotのコマンド一覧だよ、よく読め[/title]\
 [info][code]/startmath : 簡単()な計算問題を出してきます[/code][/info]\
 [hr]\
 [info][code]/助けて : cwbotとコマンド重なるのでこれ()[/code][/info]\
@@ -26,9 +26,15 @@ def help(cw,account_id,room_id,message_id):
 [hr]\
 [info][code]/AI-off : AIをシャットダウンします[/code][/info]\
 [hr]\
+[info][code]/status : botのステータス確認です[/code][/info]\
+[hr]\
+[info][code]/gemini-on : gemini-flash-4.5と言うAIを起動します。50コメしたら自動的に止まります。一度使用したら他の部屋が使ってオフにするまで使えません[/code][/info]\
+[hr]
+[info][code]/gemini-off : geminiをシャットダウンします[/code][/info]\
+[hr]\
 [info][code]botが送信したメッセージに対して削除と返信 : メッセージが消えます[/code][/info]\
 [hr]\
 メッセージリンク配布所→https://www.chatwork.com/g/messageLink\
 \nver 2026.05.20.13.19\
 [/info]"
-    )
+)
