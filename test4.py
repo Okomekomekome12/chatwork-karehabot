@@ -1,7 +1,7 @@
 from google import genai
 from google.genai import types
 
-client = genai.Client(api_key="")
+client = genai.Client(api_key="AQ.Ab8RN6JIdQhG4JmKjZspnjEwAvCcH_PZfggATaOP4ohvLFnERg")
 
 SYSTEM_PROMPT = "短く答えて"
 history = []

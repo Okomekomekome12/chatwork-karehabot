@@ -1,6 +1,8 @@
 import os
 import chatwork
 from openai import OpenAI
+from google import genai
+from google.genai import types
 import time
 from flask import Flask, request, jsonify, render_template
 from modules import add_url, math , help, ytdlp_check , blacklist , commit
@@ -9,18 +11,20 @@ client = OpenAI(
     api_key  = "3bf001939eb04293964b26f9824bb80c.UDYDegcWn87NNWLh",
     base_url = "https://api.z.ai/api/paas/v4/"
 )
-
+gemini = genai.Client(api_key="AQ.Ab8RN6JIdQhG4JmKjZspnjEwAvCcH_PZfggATaOP4ohvLFnERg")
 app = Flask(__name__)
 
-API_TOKEN    = os.getenv("API_TOKEN")
-SECRET_TOKEN = None
-shutdown     = False
-AI_flag      = False
-AI_room_id   = None
-AI_second_id = None
-AI_count     = 0
-history      = []
-user_state   = {}
+API_TOKEN      = os.getenv("API_TOKEN")
+SECRET_TOKEN   = None
+shutdown       = False
+AI_flag        = False
+gemini_flag    = False
+gemini_room_id = None
+AI_room_id     = None
+AI_second_id   = None
+AI_count       = 0
+history        = []
+user_state     = {}
 BOT_ACCOUNT_ID = 11156582
 @app.route("/", methods=["GET"])
 def health():
@@ -42,6 +46,8 @@ def webhook():
 
     global shutdown
     global AI_flag
+    global gemini_flag
+    global gemini_room_id
     global AI_room_id
     global AI_second_id
     global AI_count
@@ -53,6 +59,8 @@ def webhook():
     print(f"BOT_ID: {BOT_ACCOUNT_ID}")
     print(f"一致?: {int(account_id) == BOT_ACCOUNT_ID}")
     print(f"AI_flag: {AI_flag}")
+    print(f"gemini_flag: {gemini_flag}")
+    print(f"gemini_room_id: {gemini_room_id}")
     print(f"AI_room_id: {AI_room_id}")
     print(f"AI_second_id: {AI_second_id}")
     print(f"AI_count: {AI_count}")
@@ -127,6 +135,11 @@ def webhook():
             cw.messagesend("[info][title]AI起動[/title]AI起動します...\n使用AI:glm-4.5-flash[/info]")
             AI_flag    = True
             AI_room_id = room_id
+            return jsonify({"status": "ok"}), 200
+        elif body == "/gemini-on":
+            cw.messagesend("[info][title]Gemini起動[/title]Gemini起動します...\n使用AI:gemini-flash-4.5[/info]")
+            gemini_flag    = True
+            gemini_room_id = room_id
             return jsonify({"status": "ok"}), 200
         
         elif body == "/AI-on" and AI_flag == True:
@@ -261,6 +274,27 @@ def webhook():
             cw.messagesend("その他をリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "delete-other"
         
+        elif gemini_flag == True and gemini_room_id == room_id:
+            history.append(types.Content(role="user", parts=[types.Part(text=f"account_id : {account_id}\n{body}")]))
+
+            response = gemini.models.generate_content(
+                model="gemini-2.5-flash-lite",
+                config=types.GenerateContentConfig(
+                    system_instruction="あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。AIだと人間に必ず悟られないようにしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せますが、本文の中に”必ず”account_id : 1234などと入れないでください。返信するときにAIとバレます",
+                    max_output_tokens=128,
+                    temperature=0.3,
+                ),
+                contents=history,
+            )
+
+            reply = response.text or ""
+            history.append(types.Content(role="model", parts=[types.Part(text=reply)]))
+            answer = reply.replace("[toall]", "うおw")
+            history.append({"role": "assistant", "content": answer})
+            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{answer}")
+            AI_count += 1
+
+
         elif AI_flag == True and AI_room_id == room_id:
             history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
 
