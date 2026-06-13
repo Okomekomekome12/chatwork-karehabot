@@ -2,4 +2,4 @@ requests
 flask
 supabase
 openai
-google
+google-genai
