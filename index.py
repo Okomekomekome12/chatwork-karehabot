@@ -325,7 +325,7 @@ def webhook():
         return jsonify({"status": "ok"}), 200
     except Exception as e:
         print(f"エラーが発生しました: {e}")
-        cw.messagesend(f"エラーが発生しました: {e:10}")
+        cw.messagesend(f"エラーが発生しました: {str(e)[:10]}")
         return jsonify({"status": "ok"}), 200
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
