@@ -292,13 +292,12 @@ def webhook():
             )
 
             reply = response.text or ""
-            history.append(types.Content(role="model", parts=[types.Part(text=reply)]))
             answer = reply.replace("[toall]", "うおw")
             message = answer.replace("account_id : 1234\n","")
-            history.append({"role": "assistant", "content": message})
+            history.append(types.Content(role="model", parts=[types.Part(text=message)]))
             cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{message}")
             AI_count += 1
-
+            return jsonify({"status": "ok"}), 200
 
         elif AI_flag == True and AI_room_id == room_id:
             history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
