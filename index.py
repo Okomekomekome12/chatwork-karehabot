@@ -279,7 +279,7 @@ def webhook():
             cw.messagesend("その他をリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "delete-other"
         
-        elif gemini_flag == True and gemini_room_id == room_id:
+        if gemini_flag == True and gemini_room_id == room_id:
             history.append(types.Content(role="user", parts=[types.Part(text=f"account_id : {account_id}\n{body}")]))
 
             response = gemini.models.generate_content(
@@ -298,7 +298,6 @@ def webhook():
             history.append(types.Content(role="model", parts=[types.Part(text=message)]))
             cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{message}")
             AI_count += 1
-            return jsonify({"status": "ok"}), 200
 
         elif AI_flag == True and AI_room_id == room_id:
             history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
