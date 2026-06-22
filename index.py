@@ -283,7 +283,7 @@ def webhook():
             history.append(types.Content(role="user", parts=[types.Part(text=f"account_id : {account_id}\n{body}")]))
 
             response = gemini.models.generate_content(
-                model="gemini-2.5-flash-lite",
+                model="gemini-3.5-flash",
                 config=types.GenerateContentConfig(
                     system_instruction="あなたはチャットで人間に紛れ込もうとしているAIです、名前はカレハです。AIだと人間に必ず悟られないようにしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せますが、本文の中に”必ず”account_id : 1234などと入れないでください。返信するときにAIとバレます。もう一度言います。必ずaccount_idなどの物は入れないでください。コードで自動的に返信します。",
                     max_output_tokens=128,
