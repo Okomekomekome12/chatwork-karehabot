@@ -230,10 +230,14 @@ def webhook():
             add_url.show_list(cw)
         elif body == "/status":
             cw.messagesend(f"[info][title]状態確認[/title][code]account_id: {account_id}\nbody: {body}\nBOT_ID: {BOT_ACCOUNT_ID}\n一致?: {int(account_id) == BOT_ACCOUNT_ID}\nAI_flag: {AI_flag}\nAI_room_id: {AI_room_id}\nAI_second_id: {AI_second_id}\nAI_count: {AI_count}\nrole : {role}[/code][/info]")
-        elif body and body.find("/commit_msg") >= 1:
-            commitmsg = body.split()[1]
-            print(commitmsg)
-            commit.commitmsg(cw,commitmsg)
+        elif body and "/commit_msg" in body:
+            parts = body.split(maxsplit=1)
+            if len(parts) > 1:
+                commitmsg = parts[1]
+                print(commitmsg)
+                commit.commitmsg(cw,commitmsg)
+            else:
+                print("エラー: コマンドの後にコミットメッセージが入力されていません。")
 
 
         elif body == "/ytdlp":
