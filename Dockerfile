@@ -1,3 +1,4 @@
+# Dockerなんか知るか（（（
 # 1. ベースとなるPythonイメージを指定
 FROM python:3.10-slim
 
@@ -10,6 +11,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # 4. アプリケーションコードのコピー
 COPY . .
+
+EXPOSE 8080
 
 # 5. アプリの起動コマンド（外部アクセスを許可するためポートとホストを指定）
 CMD ["python", "index.py", "--host=0.0.0.0", "--port=8080"]
