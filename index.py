@@ -31,7 +31,7 @@ def health():
     return render_template('index.html')
 
 
-@app.route("/webhook", methods=["POST"])
+@app.route("/webhook", methods=["POST","GET"])
 def webhook():
     signature = request.headers.get("X-ChatWorkWebhookSignature")
     if not chatwork.webhook_verify_signature(request.data, signature, SECRET_TOKEN): # type: ignore
