@@ -27,9 +27,13 @@ history        = []
 user_state     = {}
 BOT_ACCOUNT_ID = 11156582
 @app.route("/", methods=["GET"])
-def health():
+def root():
     return render_template('index.html')
 
+# Flask の例
+@app.route('/health')
+def health():
+    return 'OK', 200
 
 @app.route("/webhook", methods=["POST","GET"])
 def webhook():
