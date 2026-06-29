@@ -30,7 +30,6 @@ BOT_ACCOUNT_ID = 11156582
 def root():
     return render_template('index.html')
 
-# Flask の例
 @app.route('/health')
 def health():
     return 'OK', 200
