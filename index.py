@@ -22,6 +22,8 @@ gemini_flag    = False
 gemini_room_id = None
 AI_room_id     = None
 AI_second_id   = None
+less_flag      = False
+less_room_id   = None
 AI_count       = 0
 history        = []
 user_state     = {}
@@ -53,6 +55,8 @@ def webhook():
     global gemini_room_id
     global AI_room_id
     global AI_second_id
+    global less_flag
+    global less_room_id
     global AI_count
     global history
     # デバッグログ
@@ -171,6 +175,19 @@ def webhook():
         elif body == "/AI-off":
             cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
 
+
+        elif body == "/less-battle-on":
+            cw.messagesend("[info][title]レスバ開始[/title]レスバを開始します...\n使用AI:gemini-3.1-flash-lite[/info]")
+            less_flag    = True
+            less_room_id = room_id
+            return jsonify({"status": "ok"}), 200
+        elif body == "/less-battle-off" and less_flag == True:
+            cw.messagesend("[info][title]レスバ終了[/title]レスバを終了します...[/info]")
+            less_flag    = False
+            less_room_id = None
+            history      = []
+            return jsonify({"status": "ok"}), 200
+        
         elif body == "/readme":
             cw.messagesend("このbotを導入したいと思ったことはありますよねぇ！？そうですよねぇ！？（圧）\n")
 
@@ -308,6 +325,27 @@ def webhook():
             history.append(types.Content(role="model", parts=[types.Part(text=message)]))
             cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{message}")
             AI_count += 1
+
+        elif less_flag == True and less_room_id == room_id:
+            history.append(types.Content(role="user", parts=[types.Part(text=f"account_id : {account_id}\n{body}")]))
+
+            response = gemini.models.generate_content(
+                model="gemini-3.1-flash-lite",
+                config=types.GenerateContentConfig(
+                    system_instruction="あなたは話しかけられたらレスバを始める人です。相手の言葉を否定するような返答をしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せますが、本文の中に”必ず”account_id : 1234などと入れないでください。返信するときにAIとバレます。もう一度言います。必ずaccount_idなどの物は入れないでください。",
+                    max_output_tokens=128,
+                    temperature=0.3,
+                ),
+                contents=history,
+            )
+
+            reply = response.text or ""
+            answer = reply.replace("[toall]", "うおw")
+            message = answer.replace("account_id : 1234\n","")
+            history.append(types.Content(role="model", parts=[types.Part(text=message)]))
+            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{message}")
+            AI_count += 1
+
 
         elif AI_flag == True and AI_room_id == room_id:
             history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
