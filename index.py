@@ -196,6 +196,9 @@ def webhook():
             print(deleter_room_id,deleter_message_id)
             cw.delete_message(deleter_message_id)
 
+        elif body and body.count("削除") >= 1 and account_id == 11470667:
+            pass
+
         # URL待ち状態の処理
         if account_id in user_state:
             state = user_state.pop(account_id)
