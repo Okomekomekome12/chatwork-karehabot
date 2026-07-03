@@ -5,7 +5,7 @@ from google import genai
 from google.genai import types
 import time
 from flask import Flask, request, jsonify, render_template
-from modules import add_url, math , help, ytdlp_check , blacklist , commit
+from modules import add_url, math , help, ytdlp_check , blacklist , commit , status
 
 client = OpenAI(
     api_key  = "3bf001939eb04293964b26f9824bb80c.UDYDegcWn87NNWLh",
@@ -252,7 +252,7 @@ def webhook():
         elif body == "/link":
             add_url.show_list(cw)
         elif body == "/status":
-            cw.messagesend(f"[info][title]状態確認[/title][code]account_id: {account_id}\nbody: {body}\nBOT_ID: {BOT_ACCOUNT_ID}\n一致?: {int(account_id) == BOT_ACCOUNT_ID}\nAI_flag: {AI_flag}\nAI_room_id: {AI_room_id}\nAI_second_id: {AI_second_id}\nAI_count: {AI_count}\nrole : {role}[/code][/info]")
+            status.status(cw, account_id, body, BOT_ACCOUNT_ID, AI_flag, AI_room_id, AI_second_id, AI_count, role, less_flag, less_room_id)
         elif body and "/commit_msg" in body:
             parts = body.split(maxsplit=1)
             if len(parts) > 1:
