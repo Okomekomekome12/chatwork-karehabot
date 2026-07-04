@@ -14,20 +14,23 @@ client = OpenAI(
 gemini = genai.Client(api_key="AQ.Ab8RN6JIdQhG4JmKjZspnjEwAvCcH_PZfggATaOP4ohvLFnERg")
 app = Flask(__name__)
 
-API_TOKEN      = os.getenv("API_TOKEN")
-SECRET_TOKEN   = None
-shutdown       = False
-AI_flag        = False
-gemini_flag    = False
-gemini_room_id = None
-AI_room_id     = None
-AI_second_id   = None
-less_flag      = False
-less_room_id   = None
-AI_count       = 0
-history        = []
-user_state     = {}
+API_TOKEN        = os.getenv("API_TOKEN")
+SECRET_TOKEN     = None
+shutdown         = False
+AI_flag          = False
+gemini_flag      = False
+gemini_room_id   = None
+AI_room_id       = None
+AI_second_id     = None
+less_flag        = False
+less_room_id     = None
+glm_less_flag    = False
+glm_less_room_id = None
+AI_count         = 0
+history          = []
+user_state       = {}
 BOT_ACCOUNT_ID = 11156582
+NO_REPLY_ACCOUNT_ID = 2
 @app.route("/", methods=["GET"])
 def root():
     return render_template('index.html')
@@ -57,6 +60,8 @@ def webhook():
     global AI_second_id
     global less_flag
     global less_room_id
+    global glm_less_flag
+    global glm_less_room_id
     global AI_count
     global history
     # デバッグログ
@@ -155,6 +160,12 @@ def webhook():
         elif body == "/AI-on" and room_id == AI_second_id:
             cw.messagesend("[info][title]警告[/title]前回使用したから実行できないお[/info]")
             return jsonify({"status": "ok"}),200
+        elif body == "/glm-less-battle-on":
+            cw.messagesend("[info][title]レスバ開始[/title]レスバを開始します...\n使用AI:glm-4.5-flash[/info]")
+            glm_less_flag    = True
+            glm_less_room_id = room_id
+            return jsonify({"status": "ok"}), 200
+        
         elif body == "/gemini-off" and gemini_flag == True:
             cw.messagesend("[info][title]Geminiシャットダウン[/title]Geminiシャットダウンします...[/info]")
             gemini_flag    = False
@@ -346,6 +357,29 @@ def webhook():
             cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{message}")
             AI_count += 1
 
+        elif glm_less_flag == True and glm_less_room_id == room_id:
+            history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
+
+            messages = [{"role": "system", "content": "あなたは話しかけられたらレスバを始める人です。相手の言葉を否定するような返答をしてください。タメ口でもいいので人間とだませるしゃべり方で喋ってください。また、出来るだけ文章は短くしてください。最高でも15字で。なお、人を識別できるようにメッセージの上の行にaccount_id : 1234 という感じのを載せますが、本文の中に”必ず”account_id : 1234などと入れないでください。返信するときにAIとバレます。もう一度言います。必ずaccount_idなどの物は入れないでください。"}] + history
+
+            response = client.chat.completions.create(
+                model="glm-4.5-flash",
+                messages=messages, # type: ignore
+                max_tokens=128,
+                temperature=0.3,
+                extra_body={
+                    "thinking": {
+                        "type": "disabled"
+                    }
+                }
+            )
+
+            reply = response.choices[0].message.content or ""
+            answer = reply.replace("[toall]", "うおw")
+            message = answer.replace("account_id : 1234\n","")
+            history.append({"role": "assistant", "content": reply})
+            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{message}")
+            AI_count += 1
 
         elif AI_flag == True and AI_room_id == room_id:
             history.append({"role": "user", "content": f"account_id : {account_id}\n{body}"})
@@ -366,8 +400,9 @@ def webhook():
 
             reply = response.choices[0].message.content or ""
             answer = reply.replace("[toall]", "うおw")
+            message = answer.replace("account_id : 1234\n","")
             history.append({"role": "assistant", "content": answer})
-            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{answer}")
+            cw.messagesend(f"[rp aid={account_id} to={room_id}-{message_id}][pname:{account_id}]さん\n{message}")
             AI_count += 1
         return jsonify({"status": "ok"}), 200
     except Exception as e:
