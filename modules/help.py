@@ -37,6 +37,10 @@ def help(cw,account_id,room_id,message_id):
 [hr]
 [info][code]/less-battle-off : レスバを終了します[/code][/info]
 [hr]
+[info][code]/glm-less-battle-on : glm-4.5 flashと言うAIを使ったレスバを開始します[/code][/info]
+[hr]
+[info][code]/glm-less-battle-off : glm-4.5 flashと言うAIを使ったレスバを終了します[/code][/info]
+[hr]
 [info][code]botが送信したメッセージに対して削除と返信 : メッセージが消えます[/code][/info]
 [hr]
 メッセージリンク配布所→https://www.chatwork.com/g/messageLink
