@@ -30,7 +30,7 @@ AI_count         = 0
 history          = []
 user_state       = {}
 BOT_ACCOUNT_ID = 11156582
-NO_REPLY_ACCOUNT_ID = 2
+NO_REPLY_ACCOUNT_ID = 11470667
 @app.route("/", methods=["GET"])
 def root():
     return render_template('index.html')
@@ -88,6 +88,9 @@ def webhook():
     try:
         if int(account_id) == BOT_ACCOUNT_ID:
             print("→ Bot自身のメッセージなのでスキップ")
+            return jsonify({"status": "ok"}), 200
+        if int(account_id) == NO_REPLY_ACCOUNT_ID:
+            print("無視したろ（")
             return jsonify({"status": "ok"}), 200
         if not room_id == 437219859:
             logs = body.replace("[/code]","")
