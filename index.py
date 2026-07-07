@@ -89,9 +89,6 @@ def webhook():
         if int(account_id) == BOT_ACCOUNT_ID:
             print("→ Bot自身のメッセージなのでスキップ")
             return jsonify({"status": "ok"}), 200
-        if int(account_id) == NO_REPLY_ACCOUNT_ID:
-            print("無視したろ（")
-            return jsonify({"status": "ok"}), 200
         if not room_id == 437219859:
             logs = body.replace("[/code]","")
             log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
@@ -142,7 +139,9 @@ def webhook():
             cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
             blacklist.add(account_id)
             
-
+        if int(account_id) == NO_REPLY_ACCOUNT_ID:
+            print("無視したろ（")
+            return jsonify({"status": "ok"}), 200
         if body == "/live?":
             cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
 
@@ -168,7 +167,12 @@ def webhook():
             glm_less_flag    = True
             glm_less_room_id = room_id
             return jsonify({"status": "ok"}), 200
-        
+        elif body == "/glm-less-battle-off" and glm_less_flag == True:
+            cw.messagesend("[info][title]レスバ終了[/title]レスバを終了します...[/info]")
+            glm_less_flag    = False
+            glm_less_room_id = None
+            history          = []
+            return jsonify({"status": "ok"}), 200
         elif body == "/gemini-off" and gemini_flag == True:
             cw.messagesend("[info][title]Geminiシャットダウン[/title]Geminiシャットダウンします...[/info]")
             gemini_flag    = False
