@@ -287,20 +287,20 @@ def webhook():
 
         elif body == "/blacklist":
             blacklist.accont_list(cw)
-        
-        elif body.find("/delete-blacklist") == 0:
-            cw.messagesend("[info][title]アクセス拒否[/title]この操作は古米以外できないお[/info]")
 
         elif body.find("/delete-blacklist") == 0 and account_id == admin_account_id:
             account_id = body.split()[1]
             blacklist.delete(cw,account_id)
-            
-        elif body.find("/add-blacklist") == 0:
-            cw.messagesend("[info][title]アクセス拒否[/title]この操作は古米以外できないお[/info]")
-
+        
+        elif body.find("/delete-blacklist") == 0:
+           cw.messagesend("[info][title]アクセス拒否[/title]この操作は古米以外できないお[/info]")
+       
         elif body.find("/add-blacklist") == 0 and account_id == admin_account_id:
             account_id = body.split()[1]
             blacklist.add(cw,account_id)
+        
+        elif body.find("/add-blacklist") == 0:
+            cw.messagesend("[info][title]アクセス拒否[/title]この操作は古米以外できないお[/info]")
 
         elif body == "/add-rammerhead":
             cw.messagesend("ランマーヘッドをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
