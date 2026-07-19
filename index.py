@@ -290,7 +290,9 @@ def webhook():
         elif body.find("/delete-blacklist") == 0:
             account_id = body.split()[1]
             blacklist.delete(cw,account_id)
-
+        elif body.find("/add-blacklist") == 0:
+            account_id = body.split()[1]
+            blacklist.add(cw,account_id)
 
         elif body == "/add-rammerhead":
             cw.messagesend("ランマーヘッドをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
