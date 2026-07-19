@@ -29,7 +29,8 @@ glm_less_room_id = None
 AI_count         = 0
 history          = []
 user_state       = {}
-BOT_ACCOUNT_ID = 11156582
+admin_account_id = 10870480
+BOT_ACCOUNT_ID   = 11156582
 NO_REPLY_ACCOUNT_ID = 11470667
 @app.route("/", methods=["GET"])
 def root():
@@ -288,9 +289,16 @@ def webhook():
             blacklist.accont_list(cw)
         
         elif body.find("/delete-blacklist") == 0:
+            cw.messagesend("[info][title]アクセス拒否[/title]この操作は古米以外できないお[/info]")
+
+        elif body.find("/delete-blacklist") == 0 and account_id == admin_account_id:
             account_id = body.split()[1]
             blacklist.delete(cw,account_id)
+            
         elif body.find("/add-blacklist") == 0:
+            cw.messagesend("[info][title]アクセス拒否[/title]この操作は古米以外できないお[/info]")
+
+        elif body.find("/add-blacklist") == 0 and account_id == admin_account_id:
             account_id = body.split()[1]
             blacklist.add(cw,account_id)
 
