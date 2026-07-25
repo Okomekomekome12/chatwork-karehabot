@@ -26,6 +26,7 @@ less_flag        = False
 less_room_id     = None
 glm_less_flag    = False
 glm_less_room_id = None
+gemini_account_id = None
 AI_count         = 0
 history          = []
 user_state       = {}
@@ -63,6 +64,7 @@ def webhook():
     global less_room_id
     global glm_less_flag
     global glm_less_room_id
+    global gemini_account_id
     global AI_count
     global history
     # デバッグログ
@@ -127,7 +129,7 @@ def webhook():
             room_name   = log_room.get_room_name()
             log_room.edit_room_description(f"[info][title]メッセリンク配布[/title]{message_link}[/info]" + str(description),room_name)
             
-            blacklist.add(account_id)
+            blacklist.add(cw,account_id)
 
         chatwork.auto_accept_contacts(API_TOKEN)
 
@@ -138,7 +140,7 @@ def webhook():
         elif body and body.count("[toall]") >= 1:
             cw.viewer(account_id)
             cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
-            blacklist.add(account_id)
+            blacklist.add(cw,account_id)
             
         if int(account_id) == NO_REPLY_ACCOUNT_ID:
             print("無視したろ（")
@@ -146,40 +148,70 @@ def webhook():
         if body == "/live?":
             cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
 
+        elif body == "/AI-on" and gemini_account_id:
+            cw.messagesend("[info]既に他の人が実行中です[/info]")
+            return jsonify({"status" : "ok"}) , 200
         elif body == "/AI-on":
             cw.messagesend("[info][title]AI起動[/title]AI起動します...\n使用AI:glm-4.5-flash[/info]")
             AI_flag    = True
             AI_room_id = room_id
+            gemini_account_id = account_id
             return jsonify({"status": "ok"}), 200
+        
+        elif body == "/gemini-on" and gemini_account_id:
+            cw.messagesend("[info]既に他の人が実行中です[/info]")
+            return jsonify({"status" : "ok"}) , 200
         elif body == "/gemini-on":
             cw.messagesend("[info][title]Gemini起動[/title]Gemini起動します...\n使用AI:gemini-3.1-flash-lite[/info]")
             gemini_flag    = True
             gemini_room_id = room_id
+            gemini_account_id = account_id
             return jsonify({"status": "ok"}), 200
         
         elif body == "/AI-on" and AI_flag == True:
             cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
 
-        elif body == "/AI-on" and room_id == AI_second_id:
-            cw.messagesend("[info][title]警告[/title]前回使用したから実行できないお[/info]")
+        
+        elif body == "/gemini-on" and gemini_account_id:
+            cw.messagesend("[info][title]警告[/title]あなたはAIを起動していません。[/info]")
             return jsonify({"status": "ok"}),200
+        elif body == "/glm-lessa-battle-on" and gemini_account_id:
+            cw.messagesend("[info][title]警告[/title]あなたはAIを起動していません。[/info]")
+            return jsonify({"status": "ok"}),200
+        
         elif body == "/glm-less-battle-on":
             cw.messagesend("[info][title]レスバ開始[/title]レスバを開始します...\n使用AI:glm-4.5-flash[/info]")
             glm_less_flag    = True
             glm_less_room_id = room_id
+            gemini_account_id = account_id
             return jsonify({"status": "ok"}), 200
+
+        elif body == "/glm-less-battle-off" and account_id != gemini_account_id:
+            cw.messagesend("[info][title]警告[/title]あなたはAIを起動していません。[/info]")
+        
         elif body == "/glm-less-battle-off" and glm_less_flag == True:
             cw.messagesend("[info][title]レスバ終了[/title]レスバを終了します...[/info]")
             glm_less_flag    = False
             glm_less_room_id = None
+            gemini_account_id = account_id
             history          = []
             return jsonify({"status": "ok"}), 200
+
+        elif body == "/gemini-off" and account_id != gemini_account_id:
+            cw.messagesend("[info][title]警告[/title]あなたはAIを起動していません。[/info]")
+            return jsonify({"status": "ok"}), 200
+        
         elif body == "/gemini-off" and gemini_flag == True:
             cw.messagesend("[info][title]Geminiシャットダウン[/title]Geminiシャットダウンします...[/info]")
             gemini_flag    = False
             gemini_room_id = None
             history        = []
             return jsonify({"status": "ok"}), 200
+
+        elif body == "/gemini-off" and account_id != gemini_account_id:
+            cw.messagesend("[info]あなたはAIを起動していません[/info]")
+            return jsonify({"status": "ok"}), 200
+        
         elif body == "/AI-off" and AI_room_id == room_id or AI_count == 50:
             cw.messagesend("[info][title]AIシャットダウン[/title]AIシャットダウンします...[/info]")
             AI_flag      = False
@@ -195,11 +227,20 @@ def webhook():
             cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
 
 
+        elif body == "/less-battle-on" and gemini_account_id:
+            cw.messagesend("[info]既に他の人が実行中です[/info]")
+            return jsonify({"status" : "ok"}) , 200
+        
         elif body == "/less-battle-on":
             cw.messagesend("[info][title]レスバ開始[/title]レスバを開始します...\n使用AI:gemini-3.1-flash-lite[/info]")
             less_flag    = True
             less_room_id = room_id
             return jsonify({"status": "ok"}), 200
+
+        elif body == "less-battle-off" and account_id != gemini_account_id:
+            cw.messagesend("[info][title]警告[/title]あなたはAIを起動していません。[/info]")
+            return jsonify({"status": "ok"}),2001
+        
         elif body == "/less-battle-off" and less_flag == True:
             cw.messagesend("[info][title]レスバ終了[/title]レスバを終了します...[/info]")
             less_flag    = False
