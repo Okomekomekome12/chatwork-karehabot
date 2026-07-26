@@ -79,6 +79,11 @@ def webhook():
     print(f"AI_room_id: {AI_room_id}")
     print(f"AI_second_id: {AI_second_id}")
     print(f"AI_count: {AI_count}")
+    print(f"less_flag: {less_flag}")
+    print(f"less_room_id: {less_room_id}")
+    print(f"glm_less_flag: {glm_less_flag}")
+    print(f"glm_less_room_id: {glm_less_room_id}")
+    print(f"gemini_account_id: {gemini_account_id}")
     print(body[86:94])
     print(body.find("[dtext:chatroom_added]"))
     print(f"==================\n")
@@ -312,7 +317,7 @@ def webhook():
         elif body == "/link":
             add_url.show_list(cw)
         elif body == "/status":
-            status.status(cw, account_id, body, BOT_ACCOUNT_ID, AI_flag, AI_room_id, AI_second_id, AI_count, role, less_flag, less_room_id)
+            status.status(cw, account_id, body, BOT_ACCOUNT_ID, AI_flag, AI_room_id, AI_second_id, AI_count, role, less_flag, less_room_id, glm_less_flag, glm_less_room_id, gemini_flag, gemini_room_id, gemini_account_id)
         elif body and "/commit_msg" in body:
             parts = body.split(maxsplit=1)
             if len(parts) > 1:
