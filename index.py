@@ -11,7 +11,7 @@ client = OpenAI(
     api_key  = "3bf001939eb04293964b26f9824bb80c.UDYDegcWn87NNWLh",
     base_url = "https://api.z.ai/api/paas/v4/"
 )
-gemini = genai.Client(api_key="AQ.Ab8RN6IKfVOPst_ZDIU0utQb8eHihuib_zgoSJzRSee4VVHzkg")
+gemini = genai.Client(api_key="AQ.Ab8RN6JB5ibDHCVZVrZZIdyA_EhM3FnD-EiW4l5S-D7-TnbJFw")
 app = Flask(__name__)
 
 API_TOKEN        = os.getenv("API_TOKEN")
