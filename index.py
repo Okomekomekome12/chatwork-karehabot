@@ -198,7 +198,7 @@ def webhook():
             cw.messagesend("[info][title]レスバ終了[/title]レスバを終了します...[/info]")
             glm_less_flag    = False
             glm_less_room_id = None
-            gemini_account_id = account_id
+            gemini_account_id = None
             history          = []
             return jsonify({"status": "ok"}), 200
 
@@ -210,6 +210,7 @@ def webhook():
             cw.messagesend("[info][title]Geminiシャットダウン[/title]Geminiシャットダウンします...[/info]")
             gemini_flag    = False
             gemini_room_id = None
+            gemini_account_id = None
             history        = []
             return jsonify({"status": "ok"}), 200
 
@@ -223,6 +224,7 @@ def webhook():
             AI_second_id = room_id
             AI_room_id   = None
             AI_count     = 0
+            gemini_account_id = None
             history      = []
         elif body == "/AI-off" and AI_room_id == None:
             cw.messagesend("AIは起動してないお")
@@ -250,6 +252,7 @@ def webhook():
             cw.messagesend("[info][title]レスバ終了[/title]レスバを終了します...[/info]")
             less_flag    = False
             less_room_id = None
+            gemini_account_id = None
             history      = []
             return jsonify({"status": "ok"}), 200
         
