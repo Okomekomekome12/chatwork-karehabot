@@ -146,10 +146,7 @@ def webhook():
             cw.viewer(account_id)
             cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
             blacklist.add(cw,account_id)
-            
-        if int(account_id) == NO_REPLY_ACCOUNT_ID:
-            print("無視したろ（")
-            return jsonify({"status": "ok"}), 200
+        
         if body == "/live?":
             cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
 
@@ -272,6 +269,10 @@ def webhook():
 
         elif body == "/shutdown":
             cw.messagesend("この操作は古米しかできないお")
+
+        elif body and body.count("削除") >= 1 and account_id == NO_REPLY_ACCOUNT_ID:
+            print("無視したろ（")
+            return jsonify({"status": "ok"}), 200
 
         elif body and body.count("削除") >= 1:
             target = body.split("to=")[1].split("]")[0]  
