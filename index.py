@@ -1,5 +1,6 @@
 import os
 import chatwork
+import chatwork_no_api
 from openai import OpenAI
 from google import genai
 from google.genai import types
@@ -15,6 +16,7 @@ gemini = genai.Client(api_key="AQ.Ab8RN6JB5ibDHCVZVrZZIdyA_EhM3FnD-EiW4l5S-D7-Tn
 app = Flask(__name__)
 
 API_TOKEN        = os.getenv("API_TOKEN")
+ssid             = os.getenv("ssid")
 SECRET_TOKEN     = None
 shutdown         = False
 AI_flag          = False
@@ -89,6 +91,7 @@ def webhook():
     print(f"==================\n")
 
     cw       = chatwork.setup(room_id, API_TOKEN)
+    no_api_log = chatwork_no_api.setup(418992889 , BOT_ACCOUNT_ID , ssid)
     cw2      = chatwork.setup(420107748,API_TOKEN)
     log_room = chatwork.setup(418992889,API_TOKEN)
     role     = cw.is_admin(account_id)
@@ -99,7 +102,7 @@ def webhook():
             return jsonify({"status": "ok"}), 200
         if not room_id == 437219859:
             logs = body.replace("[/code]","")
-            log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
+            no_api_log.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
         else:
             pass
         if body == "/start":

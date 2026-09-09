@@ -20,7 +20,7 @@ class CW:
             while True:
                 t = self._get_token()
                 if t:
-                    self.token["v"] = t
+                    self.token["v"] = t # type: ignore
                     print(f"[token] 更新: {t[:20]}...")
                 time.sleep(300)
         threading.Thread(target=loop, daemon=True).start()
