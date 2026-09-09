@@ -91,7 +91,7 @@ def webhook():
     print(f"==================\n")
 
     cw       = chatwork.setup(room_id, API_TOKEN)
-    no_api_log = chatwork_no_api.setup(418992889 , BOT_ACCOUNT_ID , ssid)
+    #no_api_log = chatwork_no_api.setup(418992889 , BOT_ACCOUNT_ID , ssid)
     cw2      = chatwork.setup(420107748,API_TOKEN)
     log_room = chatwork.setup(418992889,API_TOKEN)
     role     = cw.is_admin(account_id)
@@ -102,7 +102,8 @@ def webhook():
             return jsonify({"status": "ok"}), 200
         if not room_id == 437219859:
             logs = body.replace("[/code]","")
-            no_api_log.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
+            #no_api_log.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
+            log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
         else:
             pass
         if body == "/start":
