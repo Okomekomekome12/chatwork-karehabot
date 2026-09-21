@@ -49,8 +49,6 @@ def webhook():
     if not chatwork.webhook_verify_signature(request.data, signature, SECRET_TOKEN): # type: ignore
         return "invalid signature", 403
 
-
-
     data       = request.json
     room_id    = chatwork.webhook_get_roomid(data)
     body       = chatwork.webhook_get_message(data)
@@ -90,12 +88,10 @@ def webhook():
     print(f"gemini_account_id: {gemini_account_id}")
     print(body[86:94])
     print(body.find("[dtext:chatroom_added]"))
-    print("\n")
-    print("remote_addr:", request.remote_addr)
     print(f"==================\n")
 
     cw       = chatwork.setup(room_id, API_TOKEN)
-    no_api_log = chatwork_no_api.setup(418992889 , BOT_ACCOUNT_ID , ssid)
+    #no_api_log = chatwork_no_api.setup(418992889 , BOT_ACCOUNT_ID , ssid)
     cw2      = chatwork.setup(420107748,API_TOKEN)
     log_room = chatwork.setup(418992889,API_TOKEN)
     role     = cw.is_admin(account_id)
@@ -106,25 +102,25 @@ def webhook():
             return jsonify({"status": "ok"}), 200
         if not room_id == 437219859:
             logs = body.replace("[/code]","")
-            no_api_log.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
-            #log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
+            #no_api_log.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
+            log_room.messagesend(f"[info][title][piconname:{account_id}]のメッセージ \nメッセリンク→https://www.chatwork.com/#!rid{room_id}-{message_id}[/title][code]{logs}[/code][/info]")
         else:
             pass
         if body == "/start":
             cw.messagesend("起動します")
             shutdown = False
             return jsonify({"status": "ok"}), 200
-        
+
         if shutdown == True:
             print("シャットダウン中なのでスキップ")
             return jsonify({"status": "ok"}), 200
-        
+
         if body.find("[dtext:chatroom_added]") == 95:
             target_account_id = body[86:94]
             print("===メンバー参加確認===")
             print(target_account_id)
             blacklist.check(cw,target_account_id)
-            
+
 
         if body and (body.count("(quick)") >= 100 or body.count(":*") >= 100):
             cw.viewer(account_id)
@@ -141,7 +137,7 @@ def webhook():
             description = log_room.get_description()
             room_name   = log_room.get_room_name()
             log_room.edit_room_description(f"[info][title]メッセリンク配布[/title]{message_link}[/info]" + str(description),room_name)
-            
+
             blacklist.add(cw,account_id)
 
         chatwork.auto_accept_contacts(API_TOKEN)
@@ -154,7 +150,7 @@ def webhook():
             cw.viewer(account_id)
             cw.messagesend("[info][title]toall検知[/title]何してんねんハゲぇぇぇぇぇぇぇぇ（（（[/info]")
             blacklist.add(cw,account_id)
-        
+
         if body == "/live?":
             cw.messagesend("[info][title]荒らし対策bot正常稼働中[/title]生きてるお[/info]")
 
@@ -167,7 +163,7 @@ def webhook():
             AI_room_id = room_id
             gemini_account_id = account_id
             return jsonify({"status": "ok"}), 200
-        
+
         elif body == "/gemini-on" and gemini_account_id:
             cw.messagesend("[info]既に他の人が実行中です[/info]")
             return jsonify({"status" : "ok"}) , 200
@@ -177,18 +173,18 @@ def webhook():
             gemini_room_id = room_id
             gemini_account_id = account_id
             return jsonify({"status": "ok"}), 200
-        
+
         elif body == "/AI-on" and AI_flag == True:
             cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
 
-        
+
         elif body == "/gemini-on" and gemini_account_id:
             cw.messagesend("[info][title]警告[/title]あなたはAIを起動していません。[/info]")
             return jsonify({"status": "ok"}),200
         elif body == "/glm-lessa-battle-on" and gemini_account_id:
             cw.messagesend("[info][title]警告[/title]あなたはAIを起動していません。[/info]")
             return jsonify({"status": "ok"}),200
-        
+
         elif body == "/glm-less-battle-on":
             cw.messagesend("[info][title]レスバ開始[/title]レスバを開始します...\n使用AI:glm-4.5-flash[/info]")
             glm_less_flag    = True
@@ -198,7 +194,7 @@ def webhook():
 
         elif body == "/glm-less-battle-off" and account_id != gemini_account_id:
             cw.messagesend("[info][title]警告[/title]あなたはAIを起動していません。[/info]")
-        
+
         elif body == "/glm-less-battle-off" and glm_less_flag == True:
             cw.messagesend("[info][title]レスバ終了[/title]レスバを終了します...[/info]")
             glm_less_flag    = False
@@ -210,7 +206,7 @@ def webhook():
         elif body == "/gemini-off" and account_id != gemini_account_id:
             cw.messagesend("[info][title]警告[/title]あなたはAIを起動していません。[/info]")
             return jsonify({"status": "ok"}), 200
-        
+
         elif body == "/gemini-off" and gemini_flag == True:
             cw.messagesend("[info][title]Geminiシャットダウン[/title]Geminiシャットダウンします...[/info]")
             gemini_flag    = False
@@ -222,7 +218,7 @@ def webhook():
         elif body == "/gemini-off" and account_id != gemini_account_id:
             cw.messagesend("[info]あなたはAIを起動していません[/info]")
             return jsonify({"status": "ok"}), 200
-        
+
         elif body == "/AI-off" and AI_room_id == room_id or AI_count == 50:
             cw.messagesend("[info][title]AIシャットダウン[/title]AIシャットダウンします...[/info]")
             AI_flag      = False
@@ -234,7 +230,7 @@ def webhook():
         elif body == "/AI-off" and AI_room_id == None:
             cw.messagesend("AIは起動してないお")
             return jsonify({"status": "ok"}), 200
-        
+
         elif body == "/AI-off":
             cw.messagesend(f"{AI_room_id}で実行されているため、そこで落としてきてください")
 
@@ -242,7 +238,7 @@ def webhook():
         elif body == "/less-battle-on" and gemini_account_id:
             cw.messagesend("[info]既に他の人が実行中です[/info]")
             return jsonify({"status" : "ok"}) , 200
-        
+
         elif body == "/less-battle-on":
             cw.messagesend("[info][title]レスバ開始[/title]レスバを開始します...\n使用AI:gemini-3.1-flash-lite[/info]")
             less_flag    = True
@@ -252,7 +248,7 @@ def webhook():
         elif body == "less-battle-off" and account_id != gemini_account_id:
             cw.messagesend("[info][title]警告[/title]あなたはAIを起動していません。[/info]")
             return jsonify({"status": "ok"}),2001
-        
+
         elif body == "/less-battle-off" and less_flag == True:
             cw.messagesend("[info][title]レスバ終了[/title]レスバを終了します...[/info]")
             less_flag    = False
@@ -260,7 +256,7 @@ def webhook():
             gemini_account_id = None
             history      = []
             return jsonify({"status": "ok"}), 200
-        
+
         elif body == "/readme":
             cw.messagesend("このbotを導入したいと思ったことはありますよねぇ！？そうですよねぇ！？（圧）\n")
 
@@ -283,7 +279,7 @@ def webhook():
             return jsonify({"status": "ok"}), 200
 
         elif body and body.count("削除") >= 1:
-            target = body.split("to=")[1].split("]")[0]  
+            target = body.split("to=")[1].split("]")[0]
             delete_room_id , delete_message_id = target.split("-")
             deleter_room_id = delete_room_id
             deleter_message_id = delete_message_id
@@ -313,19 +309,19 @@ def webhook():
             elif state == "delete-other":
                 add_url.delete_other(body, cw)
             return jsonify({"status": "ok"}), 200
-        
+
 
         elif body == "/startmath":
             print(f"→ /startmath 実行")
             math.start(account_id, cw)
-        
+
         elif body == "/助けて":
             help.help(cw,account_id,room_id,message_id)
 
         elif body == "/update":
             cw.messagesend("[info][title]アップデート情報[/title]\
     gemini-onコマンド追加！[/info]")
-            
+
         elif body == "/link":
             add_url.show_list(cw)
         elif body == "/status":
@@ -349,49 +345,49 @@ def webhook():
         elif body.find("/delete-blacklist") == 0 and account_id == admin_account_id:
             account_id = body.split()[1]
             blacklist.delete(cw,account_id)
-        
+
         elif body.find("/delete-blacklist") == 0:
            cw.messagesend("[info][title]アクセス拒否[/title]この操作は古米以外できないお[/info]")
-       
+
         elif body.find("/add-blacklist") == 0 and account_id == admin_account_id:
             account_id = body.split()[1]
             blacklist.add(cw,account_id)
-        
+
         elif body.find("/add-blacklist") == 0:
             cw.messagesend("[info][title]アクセス拒否[/title]この操作は古米以外できないお[/info]")
 
         elif body == "/add-rammerhead":
             cw.messagesend("ランマーヘッドをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "add-rammerhead"
-        
+
         elif body == "/add-utopia":
             cw.messagesend("utopiaをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "add-utopia"
-        
+
         elif body == "/add-wakame":
             cw.messagesend("わかめtubeをリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "add-wakame"
-        
+
         elif body == "/add-other":
             cw.messagesend("その他をリスト一覧に追加します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "add-other"
-        
+
         elif body == "/delete-rammerhead":
             cw.messagesend("ランマーヘッドをリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "delete-rammerhead"
-        
+
         elif body == "/delete-utopia":
             cw.messagesend("utopiaをリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "delete-utopia"
-        
+
         elif body == "/delete-wakame":
             cw.messagesend("わかめtubeをリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "delete-wakame"
-        
+
         elif body == "/delete-other":
             cw.messagesend("その他をリスト一覧から削除します\nこのメッセージの次に\"必ず\"リンクを載せてください")
             user_state[account_id] = "delete-other"
-        
+
         if gemini_flag == True and gemini_room_id == room_id:
             history.append(types.Content(role="user", parts=[types.Part(text=f"account_id : {account_id}\n{body}")]))
 
