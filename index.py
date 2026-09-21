@@ -48,7 +48,7 @@ def webhook():
     signature = request.headers.get("X-ChatWorkWebhookSignature")
     if not chatwork.webhook_verify_signature(request.data, signature, SECRET_TOKEN): # type: ignore
         return "invalid signature", 403
-
+    ip         = request.remote_addr
     data       = request.json
     room_id    = chatwork.webhook_get_roomid(data)
     body       = chatwork.webhook_get_message(data)
@@ -92,6 +92,8 @@ def webhook():
     print("remote_addr:", request.remote_addr)
     print(f"==================\n")
 
+
+
     cw       = chatwork.setup(room_id, API_TOKEN)
     #no_api_log = chatwork_no_api.setup(418992889 , BOT_ACCOUNT_ID , ssid)
     cw2      = chatwork.setup(420107748,API_TOKEN)
@@ -99,6 +101,10 @@ def webhook():
     role     = cw.is_admin(account_id)
     print(role)
     try:
+        if ip == "10.0.4.129":
+            pass
+        else:
+            return jsonify({"status" : "ok"}), 200
         if int(account_id) == BOT_ACCOUNT_ID:
             print("→ Bot自身のメッセージなのでスキップ")
             return jsonify({"status": "ok"}), 200
