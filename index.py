@@ -88,6 +88,8 @@ def webhook():
     print(f"gemini_account_id: {gemini_account_id}")
     print(body[86:94])
     print(body.find("[dtext:chatroom_added]"))
+    print("\n")
+    print("remote_addr:", request.remote_addr)
     print(f"==================\n")
 
     cw       = chatwork.setup(room_id, API_TOKEN)
