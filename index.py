@@ -49,6 +49,8 @@ def webhook():
     if not chatwork.webhook_verify_signature(request.data, signature, SECRET_TOKEN): # type: ignore
         return "invalid signature", 403
 
+
+
     data       = request.json
     room_id    = chatwork.webhook_get_roomid(data)
     body       = chatwork.webhook_get_message(data)
@@ -88,6 +90,8 @@ def webhook():
     print(f"gemini_account_id: {gemini_account_id}")
     print(body[86:94])
     print(body.find("[dtext:chatroom_added]"))
+    print("\n")
+    print("remote_addr:", request.remote_addr)
     print(f"==================\n")
 
     cw       = chatwork.setup(room_id, API_TOKEN)
