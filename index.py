@@ -8,11 +8,13 @@ import time
 from flask import Flask, request, jsonify, render_template
 from modules import add_url, math , help, ytdlp_check , blacklist , commit , status
 
+
+
 client = OpenAI(
-    api_key  = "3bf001939eb04293964b26f9824bb80c.UDYDegcWn87NNWLh",
+    api_key  = os.getenv("glm_api"),
     base_url = "https://api.z.ai/api/paas/v4/"
 )
-gemini = genai.Client(api_key="AQ.Ab8RN6JB5ibDHCVZVrZZIdyA_EhM3FnD-EiW4l5S-D7-TnbJFw")
+gemini = genai.Client(api_key=os.getenv("gemini_api"))
 app = Flask(__name__)
 
 API_TOKEN        = os.getenv("API_TOKEN")
